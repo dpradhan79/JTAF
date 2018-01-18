@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.config.IConstants;
+import com.testreport.IReporter;
 
 public class SoftCoHomePage extends PageTemplate {
 	private static final Logger LOG = Logger.getLogger(SoftCoHomePage.class);
@@ -16,8 +17,8 @@ public class SoftCoHomePage extends PageTemplate {
 	String bySearchforHotel = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "searchforaHotel");
 	String bySearchforAirFare = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "searchforaAirFare");
 	
-	public SoftCoHomePage(WebDriver webDriver) {
-		super(webDriver);
+	public SoftCoHomePage(WebDriver webDriver, IReporter testReport) {
+		super(webDriver, testReport);
 		
 	}
 	

@@ -12,12 +12,13 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import com.config.IConstants;
+import com.testreport.IReporter;
 
 public class SoftCoInvoicePage extends PageTemplate {
-	SoftCoHomePage homePageObj = new SoftCoHomePage(this.driver);
+	SoftCoHomePage homePageObj = new SoftCoHomePage(this.driver, this.testReport);
 	private static final Logger LOG = Logger.getLogger(SoftCoInvoicePage.class);
-	public SoftCoInvoicePage(WebDriver webDriver) {
-		super(webDriver);
+	public SoftCoInvoicePage(WebDriver webDriver, IReporter testReport) {
+		super(webDriver, testReport);
 		
 	}	
 	

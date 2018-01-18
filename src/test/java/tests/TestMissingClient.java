@@ -18,7 +18,7 @@ public class TestMissingClient extends TestTemplate{
 		String password = data.get("Password");
 		String isEditable = data.get("missingClient_isEditable");
 		
-		SoftCoLoginPage loginPage = new SoftCoLoginPage(this.webDriver);
+		SoftCoLoginPage loginPage = new SoftCoLoginPage(this.webDriver, this.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
 		if(isSuccess)
 		{
@@ -29,7 +29,7 @@ public class TestMissingClient extends TestTemplate{
 			LOG.error(String.format("Login Not Successful for user - %s", userName));
 		}
 		
-		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(this.webDriver);
+		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(this.webDriver, this.testReport);
 		searchPage.validateMissingClient(isEditable);
 		
 	}

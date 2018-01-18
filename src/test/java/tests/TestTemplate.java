@@ -14,17 +14,21 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.testng.ISuite;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 
 import com.excel.Xls_Reader;
 import com.google.common.io.Resources;
 import com.pages.SoftCoLoginPage;
+import com.testreport.ExtentReporter;
+import com.testreport.IReporter;
 import com.utilities.ReusableLibs;
 import com.utilities.TestUtil;
 
@@ -32,6 +36,7 @@ public class TestTemplate {
 	
 	private static final Logger LOG = Logger.getLogger(TestTemplate.class);
 	protected WebDriver webDriver = null;
+	protected IReporter testReport = null;
 	protected String ChromeDriverExe = null;
 	protected String url = null;
 	protected String implicitWaitInSecs = null;
@@ -47,7 +52,15 @@ public class TestTemplate {
 		
 		return objMetrics;
 	}
-	
+	@BeforeSuite
+	public void beforeSuite(ISuite suiteContext)
+	{
+		LOG.info(String.format("Suite To Be Executed Next -  %s", suiteContext.getName()));	
+		ReusableLibs reUsableLib = new ReusableLibs();
+		String htmlReportName = reUsableLib.getConfigProperty("HtmlReport");
+		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");
+		//this.testReport = new ExtentReporter(filePath, boolAppendExisting, isCignitiLogoRequired)
+	}
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException
 	{
@@ -105,7 +118,7 @@ public class TestTemplate {
 	public void afterMethod(ITestContext testContext, Method m) throws Exception
 	{
 		LOG.info(String.format("Test Method Execution Completed For -  %s", m.getName()));	
-		new SoftCoLoginPage(this.webDriver).logout();
+		new SoftCoLoginPage(this.webDriver, this.testReport).logout();
 		this.webDriver.close();
 		this.webDriver.quit();
 	}

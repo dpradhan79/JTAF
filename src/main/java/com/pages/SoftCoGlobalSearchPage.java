@@ -8,10 +8,11 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.config.IConstants;
+import com.testreport.IReporter;
 
 public class SoftCoGlobalSearchPage extends PageTemplate {
-	SoftCoInvoicePage invoicePageObj = new SoftCoInvoicePage(this.driver);
-	SoftCoHomePage homePageObj = new SoftCoHomePage(this.driver);
+	SoftCoInvoicePage invoicePageObj = new SoftCoInvoicePage(this.driver, this.testReport);
+	SoftCoHomePage homePageObj = new SoftCoHomePage(this.driver, this.testReport);
 	
 	//Locators
 	private String recordsDisplayed = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "rowsInResultsTable");
@@ -20,8 +21,8 @@ public class SoftCoGlobalSearchPage extends PageTemplate {
 	private String invoice = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "Invoices");
 	
 	private static final Logger LOG = Logger.getLogger(SoftCoGlobalSearchPage.class);
-	public SoftCoGlobalSearchPage(WebDriver webDriver) {
-		super(webDriver);
+	public SoftCoGlobalSearchPage(WebDriver webDriver, IReporter testReport) {
+		super(webDriver, testReport);
 		
 	}
 	public boolean validateSearchForDocument(String isEditable) throws Exception

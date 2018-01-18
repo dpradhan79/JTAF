@@ -5,11 +5,12 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.config.IConstants;
+import com.testreport.IReporter;
 
 public class SoftCoLoginPage extends PageTemplate {
 	private static final Logger LOG = Logger.getLogger(SoftCoLoginPage.class);
-	public SoftCoLoginPage(WebDriver webDriver) {
-		super(webDriver);
+	public SoftCoLoginPage(WebDriver webDriver, IReporter testReport) {
+		super(webDriver, testReport);
 		
 	}
 	

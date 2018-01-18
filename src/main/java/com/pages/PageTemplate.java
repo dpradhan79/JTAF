@@ -1,5 +1,10 @@
 package com.pages;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 
 import org.apache.log4j.Logger;
@@ -7,22 +12,27 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.config.IConstants;
+import com.testreport.ExtentReporter;
+import com.testreport.IReporter;
 import com.utilities.ReusableLibs;
 
 public abstract class PageTemplate {
 	private static final Logger LOG = Logger.getLogger(PageTemplate.class);
 	protected WebDriver driver = null;
+	protected IReporter testReport =  null;
 	protected ReusableLibs reUsableLib = null;
 	protected int implicitWaitInSecs = 0;
 	protected int pageLoadTimeOutInSecs = 0;
-	protected PageTemplate(WebDriver webDriver)
+	protected PageTemplate(WebDriver webDriver, IReporter testReport )
 	{
 		this.driver = webDriver;
+		this.testReport = testReport;
 		this.reUsableLib = new ReusableLibs();
 		this.implicitWaitInSecs = Integer.parseInt(reUsableLib.getConfigProperty("ImplicitWaitInSecs"));
 		this.pageLoadTimeOutInSecs = Integer.parseInt(reUsableLib.getConfigProperty("PageLoadTimeOutInSecs"));
@@ -152,6 +162,38 @@ public abstract class PageTemplate {
 			throw ex;
 		}
 		return isSuccess;
+	}
+	
+	protected boolean waitUntilDataUpdatedInBackend(String dbUrl, HashMap<String, String> dbCredentials, String sql)
+	{	
+			WebDriverWait wait = new WebDriverWait(this.driver,this.implicitWaitInSecs);
+			return wait.until(new ExpectedCondition<Boolean>() {
+
+				@Override
+				public Boolean apply(WebDriver webDriver) {
+					ResultSet resultSet = null;
+					boolean isSuccess = false;
+					try
+					{
+						Connection conn = DriverManager.getConnection(dbUrl, dbCredentials.get("userName"), dbCredentials.get("password"));
+						Statement statement = conn.createStatement();
+						resultSet = statement.executeQuery(sql);						
+						if(resultSet.next())
+						{
+							isSuccess = true;
+						}
+						
+					}
+					catch(Exception ex)
+					{
+						LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+						isSuccess = false;
+					}
+					return isSuccess;
+					
+				}
+			});		
+				
 	}
 	
 	protected boolean isElementDisplayed(By byLocator)
