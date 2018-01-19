@@ -139,6 +139,26 @@ public class ReusableLibs
         }
 	    return false;
     }
+    
+    public boolean makeDir(String sFileName)
+    {		
+        try
+	    {		
+	        if(!this.fileExists(sFileName))	
+	        {
+	        	File objFile = new File(sFileName);
+	        	objFile.mkdir();
+	        	return true;
+	        }
+        }
+        
+        catch(Exception e)
+        {
+        	LOG.error(e.getStackTrace());
+          
+        }
+	    return false;
+    }
 
     /**
      * @param sPropertiesFileName

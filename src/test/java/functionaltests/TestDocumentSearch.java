@@ -1,4 +1,4 @@
-package tests;
+package functionaltests;
 
 import java.util.Hashtable;
 
@@ -8,15 +8,17 @@ import org.testng.annotations.Test;
 import com.pages.SoftCoGlobalSearchPage;
 import com.pages.SoftCoLoginPage;
 
-public class TestInvoiceSearch extends TestTemplate{
+import templates.TestTemplate;
+
+public class TestDocumentSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestInvoiceSearch.class);
+	private static final Logger LOG = Logger.getLogger(TestDocumentSearch.class);
 	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
-	public void validateInvoiceSearch(Hashtable<String, String> data) throws Exception
+	public void validateDocumentSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isEditable = data.get("searchDocument_isEditable");
+		String isAddButtonVisisble = data.get("searchDocument_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(this.webDriver, this.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
@@ -26,11 +28,12 @@ public class TestInvoiceSearch extends TestTemplate{
 		}
 		else
 		{
-			LOG.error(String.format("Login Not Successful for user - %s", userName));
+			LOG.error(String.format("Login Not Successful for user - %s", userName));			
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(this.webDriver, this.testReport);
-		searchPage.validateSearchForAnInvoice(isEditable);
+		searchPage.validateSearchForDocument(isAddButtonVisisble);
+				
 	}
 
 }

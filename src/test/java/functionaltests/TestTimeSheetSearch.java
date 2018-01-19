@@ -1,4 +1,4 @@
-package tests;
+package functionaltests;
 
 import java.util.Hashtable;
 
@@ -8,15 +8,17 @@ import org.testng.annotations.Test;
 import com.pages.SoftCoGlobalSearchPage;
 import com.pages.SoftCoLoginPage;
 
-public class TestMissingClient extends TestTemplate{
+import templates.TestTemplate;
+
+public class TestTimeSheetSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestMissingClient.class);
-	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue"})
-	public void validateMissingClient(Hashtable<String, String> data) throws Exception
+	private static final Logger LOG = Logger.getLogger(TestTimeSheetSearch.class);
+	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
+	public void validateTimeSheetSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isEditable = data.get("missingClient_isEditable");
+		String isEditable = data.get("searchDocument_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(this.webDriver, this.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
@@ -30,8 +32,7 @@ public class TestMissingClient extends TestTemplate{
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(this.webDriver, this.testReport);
-		searchPage.validateMissingClient(isEditable);
-		
+		searchPage.validateSearchForATimeSheet(isEditable);
 	}
 
 }

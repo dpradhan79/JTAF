@@ -1,4 +1,4 @@
-package tests;
+package templates;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -16,6 +16,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.testng.ISuite;
 import org.testng.ITestContext;
+import org.testng.ITestResult;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
@@ -23,7 +24,9 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
+import org.testng.xml.XmlTest;
 
+import com.aventstack.extentreports.utils.FileUtil;
 import com.excel.Xls_Reader;
 import com.google.common.io.Resources;
 import com.pages.SoftCoLoginPage;
@@ -40,7 +43,7 @@ public class TestTemplate {
 	protected String ChromeDriverExe = null;
 	protected String url = null;
 	protected String implicitWaitInSecs = null;
-	protected String pageLoadTimeOutInSecs = null;
+	protected String pageLoadTimeOutInSecs = null;	
 	
 	@DataProvider(name = "getDataFromExcel")
 	public Object[][] getDataFromExcel() throws URISyntaxException	
@@ -53,19 +56,40 @@ public class TestTemplate {
 		return objMetrics;
 	}
 	@BeforeSuite
-	public void beforeSuite(ISuite suiteContext)
+	public void beforeSuite(ITestContext testContext, XmlTest xmlTest)
 	{
-		LOG.info(String.format("Suite To Be Executed Next -  %s", suiteContext.getName()));	
+		String htmlReportName = null;
+		String screenShotLocation = null;
+		String strBoolAppendExisting = null;
+		String strIsCignitiLogoRequired = null;
+		boolean boolAppendExisting = false;
+		boolean boolIsCignitiLogoRequired = false;
+		
+		LOG.info(String.format("Suite To Be Executed Next -  %s", testContext.getSuite().getName()));	
 		ReusableLibs reUsableLib = new ReusableLibs();
-		String htmlReportName = reUsableLib.getConfigProperty("HtmlReport");
-		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");
-		//this.testReport = new ExtentReporter(filePath, boolAppendExisting, isCignitiLogoRequired)
+		htmlReportName = reUsableLib.getConfigProperty("HtmlReport");
+		screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");		
+		strBoolAppendExisting = reUsableLib.getConfigProperty("boolAppendExisting");
+		strIsCignitiLogoRequired = reUsableLib.getConfigProperty("isCignitiLogoRequired");
+		if(strBoolAppendExisting !=null && strBoolAppendExisting.equalsIgnoreCase("true"))
+		{
+			boolAppendExisting = true;
+		}
+		
+		if(strIsCignitiLogoRequired !=null && strIsCignitiLogoRequired.equalsIgnoreCase("true"))
+		{
+			boolIsCignitiLogoRequired = true;
+		}
+		
+		reUsableLib.makeDir(screenShotLocation);
+		String filePath = String.format("%s%s%s", screenShotLocation, File.separatorChar, htmlReportName);
+		this.testReport = new ExtentReporter(filePath, boolAppendExisting, boolIsCignitiLogoRequired);
 	}
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException
 	{
 		LOG.info(String.format("Test Method To Be Executed Next -  %s", m.getName()));	
-		
+		this.testReport.InitTestCase(m.getName());
 		ReusableLibs reUsableLib = new ReusableLibs();
 		
 		//Use APPURL if provided in Test Suite XML
@@ -115,12 +139,55 @@ public class TestTemplate {
 	}
 	
 	@AfterMethod
-	public void afterMethod(ITestContext testContext, Method m) throws Exception
+	public void afterMethod(ITestContext testContext, ITestResult testResult, Method m) throws Exception
 	{
 		LOG.info(String.format("Test Method Execution Completed For -  %s", m.getName()));	
-		new SoftCoLoginPage(this.webDriver, this.testReport).logout();
-		this.webDriver.close();
-		this.webDriver.quit();
+		try
+		{
+			new SoftCoLoginPage(this.webDriver, this.testReport).logout();
+		}
+		catch(Exception ex)
+		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+		}
+		
+		try
+		{
+			this.webDriver.close();
+		}
+		catch(Exception ex)
+		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+		}
+		
+		try
+		{
+			this.webDriver.quit();	
+		}
+		catch(Exception ex)
+		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+		}
+		
+		try
+		{
+			//Log to extent report
+			switch(testResult.getStatus())
+			{
+			case ITestResult.SUCCESS :
+				this.testReport.LogSuccess(m.getName());
+				break;
+				
+			case ITestResult.FAILURE :
+				this.testReport.LogFailure(m.getName());
+				break;
+			}
+		}
+		catch(Exception ex)
+		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+		}
+		this.testReport.UpdateTestCaseStatus();
 	}
 	
 	@BeforeTest

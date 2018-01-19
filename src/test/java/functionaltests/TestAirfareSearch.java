@@ -1,4 +1,4 @@
-package tests;
+package functionaltests;
 
 import java.util.Hashtable;
 
@@ -8,11 +8,13 @@ import org.testng.annotations.Test;
 import com.pages.SoftCoGlobalSearchPage;
 import com.pages.SoftCoLoginPage;
 
-public class TestTimeSheetSearch extends TestTemplate{
+import templates.TestTemplate;
+
+public class TestAirfareSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestTimeSheetSearch.class);
+	private static final Logger LOG = Logger.getLogger(TestAirfareSearch.class);
 	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
-	public void validateTimeSheetSearch(Hashtable<String, String> data) throws Exception
+	public void validateAirfareSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
@@ -30,7 +32,7 @@ public class TestTimeSheetSearch extends TestTemplate{
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(this.webDriver, this.testReport);
-		searchPage.validateSearchForATimeSheet(isEditable);
+		searchPage.validateSearchAirfare(isEditable);
 	}
 
 }

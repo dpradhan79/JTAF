@@ -20,12 +20,14 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 public class ExtentReporter implements IReporter {
 
 	private static final Logger LOG = Logger.getLogger(ExtentReporter.class);
+	private boolean boolAppendExisting= false;
 	private boolean isCignitiLogoRequired = false;
 	private ExtentReports objExtentReport = null;
     private ExtentTest objExtentTest = null;
     
 	public ExtentReporter(String filePath, boolean boolAppendExisting, boolean isCignitiLogoRequired)
 	{
+		this.boolAppendExisting = boolAppendExisting;
 		this.isCignitiLogoRequired = isCignitiLogoRequired;
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
 		htmlReporter.setAppendExisting(boolAppendExisting);
