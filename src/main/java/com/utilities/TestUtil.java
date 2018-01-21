@@ -1,5 +1,6 @@
 package com.utilities;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -270,6 +271,20 @@ public class TestUtil {
 			return testCaseEndRowNum;
 	}
 
+	public static String getScreenshotFile(String screenshotFolder, String extension)
+	{
+		ReusableLibs reUsableLib = new ReusableLibs();
+		String fileName = null;
+		String strScreenshotFileName = String.format("%s%s%s.%s", screenshotFolder, File.separatorChar, "Screenshot_1", extension);
+		File screenshotFileName = new File(strScreenshotFileName);
+		while(reUsableLib.fileExists(strScreenshotFileName))
+		{
+			//get new file name
+		}
+		
+		
+		return fileName;
+	}
 	
 	
 }

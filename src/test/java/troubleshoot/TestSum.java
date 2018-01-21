@@ -16,7 +16,7 @@ public class TestSum extends TestTemplate {
 	@DataProvider(name="getSumTestData", parallel = true)
 	public Object[][] getSumTestData()
 	{
-		Object [][] sumData = new Object[][] {{1,2,3}, {2,3,5}, {3,4,7}};
+		Object [][] sumData = new Object[][] {{1,2,3}, {2,3,5}};
 		return sumData;
 	}
 	

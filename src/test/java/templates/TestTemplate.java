@@ -2,7 +2,6 @@ package templates;
 
 import java.io.File;
 import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.nio.file.Paths;
@@ -14,10 +13,8 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import org.testng.ISuite;
 import org.testng.ITestContext;
 import org.testng.ITestResult;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeMethod;
@@ -26,7 +23,6 @@ import org.testng.annotations.BeforeTest;
 import org.testng.annotations.DataProvider;
 import org.testng.xml.XmlTest;
 
-import com.aventstack.extentreports.utils.FileUtil;
 import com.excel.Xls_Reader;
 import com.google.common.io.Resources;
 import com.pages.SoftCoLoginPage;
@@ -37,13 +33,13 @@ import com.utilities.TestUtil;
 
 public class TestTemplate {
 	
-	private static final Logger LOG = Logger.getLogger(TestTemplate.class);
-	protected WebDriver webDriver = null;
+	private static final Logger LOG = Logger.getLogger(TestTemplate.class);	
 	protected IReporter testReport = null;
 	protected String ChromeDriverExe = null;
 	protected String url = null;
 	protected String implicitWaitInSecs = null;
 	protected String pageLoadTimeOutInSecs = null;	
+	protected ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
 	
 	@DataProvider(name = "getDataFromExcel")
 	public Object[][] getDataFromExcel() throws URISyntaxException	
@@ -56,7 +52,7 @@ public class TestTemplate {
 		return objMetrics;
 	}
 	@BeforeSuite
-	public void beforeSuite(ITestContext testContext, XmlTest xmlTest)
+	public void beforeSuite(ITestContext testContext, XmlTest xmlTest) throws URISyntaxException
 	{
 		String htmlReportName = null;
 		String screenShotLocation = null;
@@ -64,6 +60,7 @@ public class TestTemplate {
 		String strIsCignitiLogoRequired = null;
 		boolean boolAppendExisting = false;
 		boolean boolIsCignitiLogoRequired = false;
+		String extentConfigFile = null;
 		
 		LOG.info(String.format("Suite To Be Executed Next -  %s", testContext.getSuite().getName()));	
 		ReusableLibs reUsableLib = new ReusableLibs();
@@ -71,6 +68,7 @@ public class TestTemplate {
 		screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");		
 		strBoolAppendExisting = reUsableLib.getConfigProperty("boolAppendExisting");
 		strIsCignitiLogoRequired = reUsableLib.getConfigProperty("isCignitiLogoRequired");
+		extentConfigFile = reUsableLib.getConfigProperty("extentConfigFile");		
 		if(strBoolAppendExisting !=null && strBoolAppendExisting.equalsIgnoreCase("true"))
 		{
 			boolAppendExisting = true;
@@ -83,12 +81,14 @@ public class TestTemplate {
 		
 		reUsableLib.makeDir(screenShotLocation);
 		String filePath = String.format("%s%s%s", screenShotLocation, File.separatorChar, htmlReportName);
-		this.testReport = new ExtentReporter(filePath, boolAppendExisting, boolIsCignitiLogoRequired);
+		this.testReport = new ExtentReporter(filePath, extentConfigFile, boolAppendExisting, boolIsCignitiLogoRequired);
 	}
+	
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException
 	{
 		LOG.info(String.format("Test Method To Be Executed Next -  %s", m.getName()));	
+		WebDriver webDriver = null;
 		this.testReport.InitTestCase(m.getName());
 		ReusableLibs reUsableLib = new ReusableLibs();
 		
@@ -124,17 +124,17 @@ public class TestTemplate {
 				options.setExperimentalOption("prefs", prefs);
 				/*Chrome settings Done*/
 				
-				this.webDriver = new ChromeDriver(options);
-				
+				webDriver = new ChromeDriver(options);
+				threadLocalWebDriver.set(webDriver);
 				break;
 		}
 		
 		this.implicitWaitInSecs = reUsableLib.getConfigProperty("ImplicitWaitInSecs");
 		this.pageLoadTimeOutInSecs = reUsableLib.getConfigProperty("PageLoadTimeOutInSecs");
 		
-    	this.webDriver.manage().timeouts().implicitlyWait(Integer.parseInt(this.implicitWaitInSecs), TimeUnit.SECONDS);
-    	this.webDriver.manage().timeouts().pageLoadTimeout(Integer.parseInt(this.pageLoadTimeOutInSecs), TimeUnit.SECONDS);
-    	this.webDriver.manage().window().maximize();
+    	webDriver.manage().timeouts().implicitlyWait(Integer.parseInt(this.implicitWaitInSecs), TimeUnit.SECONDS);
+    	webDriver.manage().timeouts().pageLoadTimeout(Integer.parseInt(this.pageLoadTimeOutInSecs), TimeUnit.SECONDS);
+    	webDriver.manage().window().maximize();
 		
 	}
 	
@@ -144,7 +144,7 @@ public class TestTemplate {
 		LOG.info(String.format("Test Method Execution Completed For -  %s", m.getName()));	
 		try
 		{
-			new SoftCoLoginPage(this.webDriver, this.testReport).logout();
+			new SoftCoLoginPage(threadLocalWebDriver.get(), this.testReport).logout();
 		}
 		catch(Exception ex)
 		{
@@ -153,7 +153,7 @@ public class TestTemplate {
 		
 		try
 		{
-			this.webDriver.close();
+			threadLocalWebDriver.get().close();
 		}
 		catch(Exception ex)
 		{
@@ -162,7 +162,7 @@ public class TestTemplate {
 		
 		try
 		{
-			this.webDriver.quit();	
+			threadLocalWebDriver.get().quit();	
 		}
 		catch(Exception ex)
 		{

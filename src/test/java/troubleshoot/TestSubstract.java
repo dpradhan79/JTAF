@@ -15,7 +15,7 @@ private static final Logger LOG = Logger.getLogger(TestSubstract.class);
 	@DataProvider(name="getSubTestData", parallel = true)
 	public Object[][] getSubTestData()
 	{
-		Object [][] subData = new Object[][] {{3,1,2}, {5,3,2}, {2,1,1}};
+		Object [][] subData = new Object[][] {{3,1,2}, {5,3,2}};
 		return subData;
 	}
 

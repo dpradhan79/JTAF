@@ -7,6 +7,8 @@ import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
@@ -16,6 +18,7 @@ import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.google.common.io.Resources;
 
 public class ExtentReporter implements IReporter {
 
@@ -25,7 +28,7 @@ public class ExtentReporter implements IReporter {
 	private ExtentReports objExtentReport = null;
     private ExtentTest objExtentTest = null;
     
-	public ExtentReporter(String filePath, boolean boolAppendExisting, boolean isCignitiLogoRequired)
+    public ExtentReporter(String filePath, boolean boolAppendExisting, boolean isCignitiLogoRequired)
 	{
 		this.boolAppendExisting = boolAppendExisting;
 		this.isCignitiLogoRequired = isCignitiLogoRequired;
@@ -34,6 +37,24 @@ public class ExtentReporter implements IReporter {
 		this.objExtentReport = new ExtentReports();
 		this.objExtentReport.attachReporter(htmlReporter);
 			
+		
+	}
+    
+    public ExtentReporter(String filePath, String extentConfigFile, boolean boolAppendExisting, boolean isCignitiLogoRequired) throws URISyntaxException
+	{
+		this.boolAppendExisting = boolAppendExisting;
+		this.isCignitiLogoRequired = isCignitiLogoRequired;
+		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
+		if(extentConfigFile != null)	
+		{
+			String extentConfigFilePath = Paths.get(Resources.getResource(extentConfigFile).toURI()).toFile().getAbsolutePath();
+			htmlReporter.loadXMLConfig(extentConfigFilePath);
+		}
+		
+		htmlReporter.setAppendExisting(boolAppendExisting);
+		this.objExtentReport = new ExtentReports();
+		this.objExtentReport.attachReporter(htmlReporter);
+		
 		
 	}
 	
