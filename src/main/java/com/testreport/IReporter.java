@@ -32,7 +32,7 @@ public interface IReporter {
 	 void logFatal(Exception ex, String screenShotPath);
 	 
 	 
-	 void UpdateTestCaseStatus();
-	 void Close();
-	 void ManipulateTestReport(ITestReportManipulator objTestReportManipulator);
+	 void updateTestCaseStatus();
+	 void close();
+	 void manipulateTestReport(ITestReportManipulator objTestReportManipulator);
 }

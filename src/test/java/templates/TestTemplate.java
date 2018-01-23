@@ -78,7 +78,7 @@ public class TestTemplate {
 	public void afterTest(ITestContext testContext)
 	{
 		LOG.info(String.format("Test - %s , Completed", testContext.getCurrentXmlTest().getName()));
-		TestTemplate.testReport.UpdateTestCaseStatus();
+		TestTemplate.testReport.updateTestCaseStatus();
 	}
 	
 	@BeforeMethod
@@ -184,7 +184,7 @@ public class TestTemplate {
 		{
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 		}
-		TestTemplate.testReport.UpdateTestCaseStatus();
+		TestTemplate.testReport.updateTestCaseStatus();
 	}
 	
 		

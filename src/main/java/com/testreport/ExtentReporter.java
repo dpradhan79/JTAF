@@ -239,19 +239,19 @@ public class ExtentReporter implements IReporter {
 	}
 
 	@Override
-	public void UpdateTestCaseStatus() {
+	public void updateTestCaseStatus() {
 		this.objExtentReport.flush();
 		
 	}
 
 	@Override
-	public void Close() {
+	public void close() {
 		this.objExtentReport.flush();
 		
 	}
 
 	@Override
-	public void ManipulateTestReport(ITestReportManipulator objTestReportManipulator) {
+	public void manipulateTestReport(ITestReportManipulator objTestReportManipulator) {
 		// TODO Auto-generated method stub
 		
 	}
