@@ -199,4 +199,22 @@ public class ReusableLibs
             return "-1";
         }
     }
+    
+    public static String getScreenshotFile(String screenshotFolder, String extension)
+	{
+		ReusableLibs reUsableLib = new ReusableLibs();
+		String fileName = null;
+		int count = 1;
+		String strScreenshotFileName = String.format("%s%s%s%d.%s", screenshotFolder, File.separatorChar, "Screenshot_", count, extension);
+		
+		while(reUsableLib.fileExists(strScreenshotFileName))
+		{
+			//get new file name
+			//increase count
+			strScreenshotFileName = String.format("%s%s%s%d.%s", screenshotFolder, File.separatorChar, "Screenshot_", ++count, extension);
+			
+		}		
+		fileName = strScreenshotFileName;
+		return fileName;
+	}
 }

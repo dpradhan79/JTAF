@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import com.config.IConstants;
+import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
 
 public class SoftCoInvoicePage extends PageTemplate {

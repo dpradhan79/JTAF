@@ -33,6 +33,11 @@ import com.testreport.ReportFactory.ReportType;
 import com.utilities.ReusableLibs;
 import com.utilities.TestUtil;
 
+/**
+ * 
+ * @author E001518 - Debasish Pradhan (Architect)
+ *
+ */
 public class TestTemplate {
 	
 	private static final Logger LOG = Logger.getLogger(TestTemplate.class);	

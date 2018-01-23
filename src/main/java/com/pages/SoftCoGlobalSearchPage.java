@@ -8,6 +8,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.config.IConstants;
+import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
 
 public class SoftCoGlobalSearchPage extends PageTemplate {

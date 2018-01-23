@@ -5,6 +5,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.config.IConstants;
+import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
 
 public class SoftCoHomePage extends PageTemplate {

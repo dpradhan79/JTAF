@@ -2,6 +2,12 @@ package com.testreport;
 
 import com.utilities.ReusableLibs;
 
+/**
+ * 
+ * @author E001518  - Debasish Pradhan (Architect)
+ *
+ */
+
 public class ReportFactory {
 	
 	private static IReporter testReport = null;	

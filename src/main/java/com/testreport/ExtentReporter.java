@@ -1,5 +1,7 @@
 package com.testreport;
-
+/**
+ *  @author E001518 - Debasish Pradhan (Architect)
+ */
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -8,6 +10,7 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
@@ -16,8 +19,10 @@ import org.testng.log4testng.Logger;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.utils.FileUtil;
 import com.google.common.io.Resources;
 
 public class ExtentReporter implements IReporter {
@@ -94,10 +99,13 @@ public class ExtentReporter implements IReporter {
 
 	@Override
 	public void LogSuccess(String stepName, String stepDescription, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
-		try {			
+		
+		try {	
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, String.format("StepName - %s, Step Description", stepName, stepDescription));
+			ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
+			
+			//ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, String.format("StepName - %s, Step Description", stepName, stepDescription));
+			//ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath));
 			LOG.info(String.format("StepName - %s, StepDescription - %s Passed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
@@ -252,7 +260,7 @@ public class ExtentReporter implements IReporter {
 		Robot objRobot = new Robot();		
 		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         BufferedImage screenFullImage = objRobot.createScreenCapture(screenRect);            
-        String format = screenShotPath.substring(0, screenShotPath.indexOf("."));
+        String format = screenShotPath.substring(screenShotPath.indexOf(".") + 1);       
        	ImageIO.write(screenFullImage, format, new File(screenShotPath));
 		
 	}

@@ -1,5 +1,9 @@
 package com.testreport;
-
+/**
+ * 
+ * @author E001518 - Debasish Pradhan (Architect)
+ *
+ */
 public interface IReporter {
 	
 	 void InitTestCase(String testcaseName); 	 

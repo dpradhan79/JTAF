@@ -6,6 +6,11 @@ import java.util.Hashtable;
 import java.util.List;
 import com.excel.Xls_Reader;
 
+/**
+ * 
+ * @author E001518  - Debasish Pradhan (Architect)
+ *
+ */
 public class TestUtil {
 	// true - Y
 		// false - N
@@ -271,20 +276,5 @@ public class TestUtil {
 			return testCaseEndRowNum;
 	}
 
-	public static String getScreenshotFile(String screenshotFolder, String extension)
-	{
-		ReusableLibs reUsableLib = new ReusableLibs();
-		String fileName = null;
-		String strScreenshotFileName = String.format("%s%s%s.%s", screenshotFolder, File.separatorChar, "Screenshot_1", extension);
-		File screenshotFileName = new File(strScreenshotFileName);
-		while(reUsableLib.fileExists(strScreenshotFileName))
-		{
-			//get new file name
-		}
-		
-		
-		return fileName;
-	}
-	
 	
 }

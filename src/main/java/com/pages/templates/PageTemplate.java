@@ -1,4 +1,4 @@
-package com.pages;
+package com.pages.templates;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -21,6 +21,11 @@ import com.config.IConstants;
 import com.testreport.IReporter;
 import com.utilities.ReusableLibs;
 
+/**
+ * 
+ * @author E001518  - Debasish Pradhan (Architect)
+ *
+ */
 public abstract class PageTemplate {
 	private static final Logger LOG = Logger.getLogger(PageTemplate.class);
 	protected WebDriver driver = null;
@@ -37,51 +42,57 @@ public abstract class PageTemplate {
 		this.pageLoadTimeOutInSecs = Integer.parseInt(reUsableLib.getConfigProperty("PageLoadTimeOutInSecs"));
 	}	
 	
-	protected void SendKeys(By byLocator, String text) throws Exception
+	protected void SendKeys(By byLocator, String text)
 	{
 		try
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			this.driver.findElement(byLocator).sendKeys(text);
+			this.testReport.LogSuccess("SendKeys", String.format("Entered Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator));
 			LOG.info(String.format("SendKeys Successful - (By - %s, text - %s)", byLocator, text));
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			this.testReport.LogFailure("SendKeys", String.format("Failed To Enter Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator, this.getScreenShotName()));
+			this.testReport.LogException(ex);
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		
 	}
 	
-	protected void Click(By byLocator) throws Exception
+	protected void Click(By byLocator)
 	{
 		try
 		{
 			this.waitUntilElementIsClickable(byLocator);
-			this.driver.findElement(byLocator).click();;
+			this.driver.findElement(byLocator).click();
+			this.testReport.LogSuccess("Click", String.format("Click Performed On Locator - <mark>%s</mark>", byLocator));
 			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			this.testReport.LogFailure("Click", String.format("Failed To Perform Click On Locator - <mark>%s</mark>", byLocator, this.getScreenShotName()));
+			this.testReport.LogException(ex);
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		
 	}
 
-	protected String getAttribute(By byLocator, String attribute) throws Exception
+	protected String getAttribute(By byLocator, String attribute)
 	{
 		String attributeValue = null;
 		try
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			attributeValue = this.driver.findElement(byLocator).getAttribute(attribute);
+			this.testReport.LogInfo(String.format("Method - <mark>%s</mark> returns value - <mark>%s</mark> for attribute - <mark>%s</mark> for Locator - <mark>%s</mark>", "getAttribute", attributeValue, attribute, byLocator));
 			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			this.testReport.LogFailure("getAttribute", String.format("Exception Encountered for <mark>%s</mark>", "getAttribute"), this.getScreenShotName());
+			this.testReport.LogException(ex);
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		return attributeValue;
 		
@@ -138,8 +149,7 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		return isSuccess;
 	}
@@ -157,8 +167,7 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		return isSuccess;
 	}
@@ -241,16 +250,6 @@ public abstract class PageTemplate {
     	implicitwait(2);
 	}
 	
-	protected String takeScreemShot()
-	{
-		String screenshotLocation = null;
-		String screenShotAbsolutePath = null;
-		
-		
-		
-		return screenShotAbsolutePath;
-	}
-	
 	protected boolean checkCheckBox(By byLocator)
 	{
 		boolean isSuccess = false;
@@ -278,9 +277,15 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			throw ex;
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		return isSuccess;
+	}
+	
+	protected synchronized String getScreenShotName()
+	{
+		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");
+		String fileExtension = reUsableLib.getConfigProperty("ScreenshotPictureFormat");		
+		return ReusableLibs.getScreenshotFile(screenShotLocation, fileExtension);
 	}
 }
