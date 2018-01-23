@@ -2,9 +2,9 @@ package com.testreport;
 
 public interface IReporter {
 	
-	 void InitTestCase(String testcaseName); 
-	 void InitTestCase(String testcaseName, String testCaseDescription);
+	 void InitTestCase(String testcaseName); 	 
 	 
+	 void CreateNode(String nodeName);	 
 	 
 	 void LogSuccess(String stepName);
 	 void LogSuccess(String stepName, String stepDescription);

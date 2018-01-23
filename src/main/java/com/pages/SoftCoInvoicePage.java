@@ -2,7 +2,6 @@ package com.pages;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;

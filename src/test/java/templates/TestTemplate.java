@@ -28,18 +28,20 @@ import com.google.common.io.Resources;
 import com.pages.SoftCoLoginPage;
 import com.testreport.ExtentReporter;
 import com.testreport.IReporter;
+import com.testreport.ReportFactory;
+import com.testreport.ReportFactory.ReportType;
 import com.utilities.ReusableLibs;
 import com.utilities.TestUtil;
 
 public class TestTemplate {
 	
 	private static final Logger LOG = Logger.getLogger(TestTemplate.class);	
-	protected IReporter testReport = null;
+	protected static IReporter testReport = null;
 	protected String ChromeDriverExe = null;
 	protected String url = null;
 	protected String implicitWaitInSecs = null;
 	protected String pageLoadTimeOutInSecs = null;	
-	protected ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
+	protected static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
 	
 	@DataProvider(name = "getDataFromExcel")
 	public Object[][] getDataFromExcel() throws URISyntaxException	
@@ -52,36 +54,12 @@ public class TestTemplate {
 		return objMetrics;
 	}
 	@BeforeSuite
-	public void beforeSuite(ITestContext testContext, XmlTest xmlTest) throws URISyntaxException
+	public void beforeSuite(ITestContext testContext, XmlTest xmlTest) throws Exception
 	{
-		String htmlReportName = null;
-		String screenShotLocation = null;
-		String strBoolAppendExisting = null;
-		String strIsCignitiLogoRequired = null;
-		boolean boolAppendExisting = false;
-		boolean boolIsCignitiLogoRequired = false;
-		String extentConfigFile = null;
 		
 		LOG.info(String.format("Suite To Be Executed Next -  %s", testContext.getSuite().getName()));	
-		ReusableLibs reUsableLib = new ReusableLibs();
-		htmlReportName = reUsableLib.getConfigProperty("HtmlReport");
-		screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");		
-		strBoolAppendExisting = reUsableLib.getConfigProperty("boolAppendExisting");
-		strIsCignitiLogoRequired = reUsableLib.getConfigProperty("isCignitiLogoRequired");
-		extentConfigFile = reUsableLib.getConfigProperty("extentConfigFile");		
-		if(strBoolAppendExisting !=null && strBoolAppendExisting.equalsIgnoreCase("true"))
-		{
-			boolAppendExisting = true;
-		}
 		
-		if(strIsCignitiLogoRequired !=null && strIsCignitiLogoRequired.equalsIgnoreCase("true"))
-		{
-			boolIsCignitiLogoRequired = true;
-		}
-		
-		reUsableLib.makeDir(screenShotLocation);
-		String filePath = String.format("%s%s%s", screenShotLocation, File.separatorChar, htmlReportName);
-		this.testReport = new ExtentReporter(filePath, extentConfigFile, boolAppendExisting, boolIsCignitiLogoRequired);
+		TestTemplate.testReport = ReportFactory.getInstance(ReportType.ExtentHtml);
 	}
 	
 	@BeforeMethod
@@ -89,7 +67,7 @@ public class TestTemplate {
 	{
 		LOG.info(String.format("Test Method To Be Executed Next -  %s", m.getName()));	
 		WebDriver webDriver = null;
-		this.testReport.InitTestCase(m.getName());
+		TestTemplate.testReport.InitTestCase(m.getName());
 		ReusableLibs reUsableLib = new ReusableLibs();
 		
 		//Use APPURL if provided in Test Suite XML
@@ -144,7 +122,7 @@ public class TestTemplate {
 		LOG.info(String.format("Test Method Execution Completed For -  %s", m.getName()));	
 		try
 		{
-			new SoftCoLoginPage(threadLocalWebDriver.get(), this.testReport).logout();
+			new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport).logout();
 		}
 		catch(Exception ex)
 		{
@@ -175,11 +153,11 @@ public class TestTemplate {
 			switch(testResult.getStatus())
 			{
 			case ITestResult.SUCCESS :
-				this.testReport.LogSuccess(m.getName());
+				TestTemplate.testReport.LogSuccess(m.getName());
 				break;
 				
 			case ITestResult.FAILURE :
-				this.testReport.LogFailure(m.getName());
+				TestTemplate.testReport.LogFailure(m.getName());
 				break;
 			}
 		}
@@ -187,19 +165,21 @@ public class TestTemplate {
 		{
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 		}
-		this.testReport.UpdateTestCaseStatus();
+		TestTemplate.testReport.UpdateTestCaseStatus();
 	}
 	
 	@BeforeTest
 	public void beforeTest(ITestContext testContext)
 	{
 		LOG.info(String.format("Test - %s , About To Start", testContext.getCurrentXmlTest().getName()));
+		TestTemplate.testReport.CreateNode(testContext.getCurrentXmlTest().getName());
 	}
 	
 	@AfterTest
 	public void afterTest(ITestContext testContext)
 	{
 		LOG.info(String.format("Test - %s , Completed", testContext.getCurrentXmlTest().getName()));
+		TestTemplate.testReport.UpdateTestCaseStatus();
 	}
 
 }

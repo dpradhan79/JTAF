@@ -20,7 +20,7 @@ public class TestInvoiceSearch extends TestTemplate{
 		String password = data.get("Password");
 		String isEditable = data.get("searchDocument_isEditable");
 		
-		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), this.testReport);
+		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
 		if(isSuccess)
 		{
@@ -31,7 +31,7 @@ public class TestInvoiceSearch extends TestTemplate{
 			LOG.error(String.format("Login Not Successful for user - %s", userName));
 		}
 		
-		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), this.testReport);
+		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		searchPage.validateSearchForAnInvoice(isEditable);
 	}
 

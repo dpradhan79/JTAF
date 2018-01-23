@@ -22,13 +22,13 @@
     <test name="TestDocumentSearch_TESTENV1">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
-       		<class name="tests.TestDocumentSearch" />       		     		
+       		<class name="functionaltests.TestDocumentSearch" />       		     		
         </classes>
     </test>
      <test name="TestDocumentSearch_TESTENV2">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
-       		<class name="tests.TestInvoiceSearch" />       		     		
+       		<class name="functionaltests.TestInvoiceSearch" />       		     		
         </classes>
     </test>
    

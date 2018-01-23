@@ -18,7 +18,6 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import com.config.IConstants;
-import com.testreport.ExtentReporter;
 import com.testreport.IReporter;
 import com.utilities.ReusableLibs;
 
