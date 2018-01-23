@@ -48,13 +48,13 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			this.driver.findElement(byLocator).sendKeys(text);
-			this.testReport.LogSuccess("SendKeys", String.format("Entered Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator));
+			this.testReport.logSuccess("SendKeys", String.format("Entered Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator));
 			LOG.info(String.format("SendKeys Successful - (By - %s, text - %s)", byLocator, text));
 		}
 		catch(Exception ex)
 		{
-			this.testReport.LogFailure("SendKeys", String.format("Failed To Enter Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator, this.getScreenShotName()));
-			this.testReport.LogException(ex);
+			this.testReport.logFailure("SendKeys", String.format("Failed To Enter Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator, this.getScreenShotName()));
+			this.testReport.logException(ex);
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		
@@ -66,13 +66,13 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			this.driver.findElement(byLocator).click();
-			this.testReport.LogSuccess("Click", String.format("Click Performed On Locator - <mark>%s</mark>", byLocator));
+			this.testReport.logSuccess("Click", String.format("Click Performed On Locator - <mark>%s</mark>", byLocator));
 			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
 		}
 		catch(Exception ex)
 		{
-			this.testReport.LogFailure("Click", String.format("Failed To Perform Click On Locator - <mark>%s</mark>", byLocator, this.getScreenShotName()));
-			this.testReport.LogException(ex);
+			this.testReport.logFailure("Click", String.format("Failed To Perform Click On Locator - <mark>%s</mark>", byLocator, this.getScreenShotName()));
+			this.testReport.logException(ex);
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		
@@ -85,13 +85,13 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			attributeValue = this.driver.findElement(byLocator).getAttribute(attribute);
-			this.testReport.LogInfo(String.format("Method - <mark>%s</mark> returns value - <mark>%s</mark> for attribute - <mark>%s</mark> for Locator - <mark>%s</mark>", "getAttribute", attributeValue, attribute, byLocator));
+			this.testReport.logInfo(String.format("Method - <mark>%s</mark> returns value - <mark>%s</mark> for attribute - <mark>%s</mark> for Locator - <mark>%s</mark>", "getAttribute", attributeValue, attribute, byLocator));
 			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
 		}
 		catch(Exception ex)
 		{
-			this.testReport.LogFailure("getAttribute", String.format("Exception Encountered for <mark>%s</mark>", "getAttribute"), this.getScreenShotName());
-			this.testReport.LogException(ex);
+			this.testReport.logFailure("getAttribute", String.format("Exception Encountered for <mark>%s</mark>", "getAttribute"), this.getScreenShotName());
+			this.testReport.logException(ex);
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
 		}
 		return attributeValue;

@@ -67,12 +67,26 @@ public class TestTemplate {
 		TestTemplate.testReport = ReportFactory.getInstance(ReportType.ExtentHtml);
 	}
 	
+	@BeforeTest
+	public void beforeTest(ITestContext testContext)
+	{
+		LOG.info(String.format("Test - %s , About To Start", testContext.getCurrentXmlTest().getName()));
+		TestTemplate.testReport.createTestNgXMLTestTag(testContext.getCurrentXmlTest().getName());
+	}
+	
+	@AfterTest
+	public void afterTest(ITestContext testContext)
+	{
+		LOG.info(String.format("Test - %s , Completed", testContext.getCurrentXmlTest().getName()));
+		TestTemplate.testReport.UpdateTestCaseStatus();
+	}
+	
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException
 	{
 		LOG.info(String.format("Test Method To Be Executed Next -  %s", m.getName()));	
 		WebDriver webDriver = null;
-		TestTemplate.testReport.InitTestCase(m.getName());
+		TestTemplate.testReport.initTestCase(m.getName());
 		ReusableLibs reUsableLib = new ReusableLibs();
 		
 		//Use APPURL if provided in Test Suite XML
@@ -158,11 +172,11 @@ public class TestTemplate {
 			switch(testResult.getStatus())
 			{
 			case ITestResult.SUCCESS :
-				TestTemplate.testReport.LogSuccess(m.getName());
+				TestTemplate.testReport.logSuccess(m.getName());
 				break;
 				
 			case ITestResult.FAILURE :
-				TestTemplate.testReport.LogFailure(m.getName());
+				TestTemplate.testReport.logFailure(m.getName());
 				break;
 			}
 		}
@@ -173,18 +187,7 @@ public class TestTemplate {
 		TestTemplate.testReport.UpdateTestCaseStatus();
 	}
 	
-	@BeforeTest
-	public void beforeTest(ITestContext testContext)
-	{
-		LOG.info(String.format("Test - %s , About To Start", testContext.getCurrentXmlTest().getName()));
-		TestTemplate.testReport.CreateNode(testContext.getCurrentXmlTest().getName());
-	}
+		
 	
-	@AfterTest
-	public void afterTest(ITestContext testContext)
-	{
-		LOG.info(String.format("Test - %s , Completed", testContext.getCurrentXmlTest().getName()));
-		TestTemplate.testReport.UpdateTestCaseStatus();
-	}
 
 }

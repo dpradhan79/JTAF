@@ -6,30 +6,30 @@ package com.testreport;
  */
 public interface IReporter {
 	
-	 void InitTestCase(String testcaseName); 	 
+	 void initTestCase(String testcaseName); 	 
 	 
-	 void CreateNode(String nodeName);	 
+	 void createTestNgXMLTestTag(String nodeName);	 
 	 
-	 void LogSuccess(String stepName);
-	 void LogSuccess(String stepName, String stepDescription);
-	 void LogSuccess(String stepName, String stepDescription, String screenShotPath);
+	 void logSuccess(String stepName);
+	 void logSuccess(String stepName, String stepDescription);
+	 void logSuccess(String stepName, String stepDescription, String screenShotPath);
 	 
-	 void LogFailure(String stepName);
-	 void LogFailure(String stepName, String stepDescription);
-	 void LogFailure(String stepName, String stepDescription, String screenShotPath);
+	 void logFailure(String stepName);
+	 void logFailure(String stepName, String stepDescription);
+	 void logFailure(String stepName, String stepDescription, String screenShotPath);
 	 
-	 void LogInfo(String message);
-	 void LogInfo(String message, String screenShotPath);
+	 void logInfo(String message);
+	 void logInfo(String message, String screenShotPath);
 	 
-	 void LogWarning(String stepName);
-	 void LogWarning(String stepName, String stepDescription);
-	 void LogWarning(String stepName, String stepDescription, String screenShotPath);
+	 void logWarning(String stepName);
+	 void logWarning(String stepName, String stepDescription);
+	 void logWarning(String stepName, String stepDescription, String screenShotPath);
 	 
-	 void LogException(Exception ex);
-	 void LogException(Exception ex, String screenShotPath);
+	 void logException(Exception ex);
+	 void logException(Exception ex, String screenShotPath);
 	 
-	 void LogFatal(Exception ex);
-	 void LogFatal(Exception ex, String screenShotPath);
+	 void logFatal(Exception ex);
+	 void logFatal(Exception ex, String screenShotPath);
 	 
 	 
 	 void UpdateTestCaseStatus();

@@ -69,7 +69,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void InitTestCase(String testcaseName) {
+	public void initTestCase(String testcaseName) {
 		ExtentTest objExtentTest = null;
 		objExtentTest = ExtentReporter.threadLocalExtentTest.get().createNode(testcaseName);	
 		ExtentReporter.threadLocalExtentTest.set(objExtentTest);
@@ -77,7 +77,7 @@ public class ExtentReporter implements IReporter {
 	}
 	
 	@Override
-	public void CreateNode(String nodeName)
+	public void createTestNgXMLTestTag(String nodeName)
 	{
 		ExtentTest objExtentTest = null;
 		objExtentTest =  this.objExtentReport.createTest(nodeName);
@@ -86,14 +86,14 @@ public class ExtentReporter implements IReporter {
 		
 	}
 	@Override
-	public void LogSuccess(String stepName) {
+	public void logSuccess(String stepName) {
 		
 		ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, stepName);
 		LOG.info(String.format("Step - %s Passed", stepName));
 	}
 
 	@Override
-	public void LogSuccess(String stepName, String stepDescription) {
+	public void logSuccess(String stepName, String stepDescription) {
 		
 		ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
 		LOG.info(String.format("StepName - %s, StepDescription - %s Passed", stepName, stepDescription));
@@ -101,7 +101,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void LogSuccess(String stepName, String stepDescription, String screenShotPath) {
+	public void logSuccess(String stepName, String stepDescription, String screenShotPath) {
 		
 		try {	
 			this.takeScreenShot(screenShotPath);
@@ -118,21 +118,21 @@ public class ExtentReporter implements IReporter {
 
 	
 	@Override
-	public void LogFailure(String stepName) {
+	public void logFailure(String stepName) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, stepName);
 		LOG.error(String.format("Step - %s Failed", stepName));
 		
 	}
 
 	@Override
-	public void LogFailure(String stepName, String stepDescription) {
+	public void logFailure(String stepName, String stepDescription) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
 		LOG.error(String.format("StepName - %s, StepDescription - %s Failed", stepName, stepDescription));
 		
 	}
 	
 	@Override
-	public void LogFailure(String stepName, String stepDescription, String screenShotPath) {
+	public void logFailure(String stepName, String stepDescription, String screenShotPath) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
 		try {			
 			this.takeScreenShot(screenShotPath);
@@ -147,14 +147,14 @@ public class ExtentReporter implements IReporter {
 
 
 	@Override
-	public void LogInfo(String message) {
+	public void logInfo(String message) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.INFO, message);
 		LOG.info(message);
 		
 	}
 
 	@Override
-	public void LogInfo(String message, String screenShotPath) {
+	public void logInfo(String message, String screenShotPath) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.INFO, message);
 		try {			
 			this.takeScreenShot(screenShotPath);
@@ -168,21 +168,21 @@ public class ExtentReporter implements IReporter {
 
 
 	@Override
-	public void LogWarning(String stepName) {
+	public void logWarning(String stepName) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, stepName);
 		LOG.warn(stepName);
 		
 	}
 
 	@Override
-	public void LogWarning(String stepName, String stepDescription) {
+	public void logWarning(String stepName, String stepDescription) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
 		LOG.warn(String.format("StepName - %s, StepDescription - %s Warning", stepName, stepDescription));
 		
 	}
 	
 	@Override
-	public void LogWarning(String stepName, String stepDescription, String screenShotPath) {
+	public void logWarning(String stepName, String stepDescription, String screenShotPath) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
 		try {			
 			this.takeScreenShot(screenShotPath);
@@ -197,14 +197,14 @@ public class ExtentReporter implements IReporter {
 
 
 	@Override
-	public void LogException(Exception ex) {
+	public void logException(Exception ex) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.ERROR, ex);
 		LOG.error(ex.getMessage(), ex);
 		
 	}
 
 	@Override
-	public void LogException(Exception ex, String screenShotPath) {
+	public void logException(Exception ex, String screenShotPath) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.ERROR, ex);
 		try {			
 			this.takeScreenShot(screenShotPath);
@@ -218,7 +218,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void LogFatal(Exception ex) {
+	public void logFatal(Exception ex) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FATAL, ex);
 		LOG.fatal(ex.getMessage(), ex);
 		
@@ -226,7 +226,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void LogFatal(Exception ex, String screenShotPath) {
+	public void logFatal(Exception ex, String screenShotPath) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FATAL, ex);
 		try {			
 			this.takeScreenShot(screenShotPath);
