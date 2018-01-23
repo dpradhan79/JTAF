@@ -2,7 +2,7 @@ package com.config;
 
 /**
  * 
- * @author E001518 - Debasish Pradhan
+ * @author E001518 - Debasish Pradhan (Architect)
  *
  */
 public interface IConstants 

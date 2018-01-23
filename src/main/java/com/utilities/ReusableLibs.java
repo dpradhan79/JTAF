@@ -13,6 +13,11 @@ import org.testng.log4testng.Logger;
 import com.config.IConstants;
 import com.google.common.io.Resources;
 
+/**
+ * 
+ * @author E001518 - Debasish Pradhan (Architect)
+ *
+ */
 public class ReusableLibs 
 {
     private static final Logger LOG = Logger.getLogger(ReusableLibs.class);

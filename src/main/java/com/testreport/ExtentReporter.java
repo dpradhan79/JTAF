@@ -1,7 +1,5 @@
 package com.testreport;
-/**
- *  @author E001518 - Debasish Pradhan (Architect)
- */
+
 import java.awt.AWTException;
 import java.awt.Rectangle;
 import java.awt.Robot;
@@ -25,6 +23,11 @@ import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
 import com.aventstack.extentreports.utils.FileUtil;
 import com.google.common.io.Resources;
 
+/**
+ * 
+ * @author E001518  - Debasish Pradhan (Architect)
+ *
+ */
 public class ExtentReporter implements IReporter {
 
 	private static final Logger LOG = Logger.getLogger(ExtentReporter.class);
