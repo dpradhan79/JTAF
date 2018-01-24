@@ -6,7 +6,7 @@
 		<listener class-name = "org.uncommons.reportng.JUnitXMLReporter"/>			
 	</listeners>
     
-    <!--<test name="TestDocumentSearch_TESTENV">
+    <!--<test name="TestSearch_TESTENV">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>
        		<class name="tests.TestMissingClient" />
@@ -19,13 +19,13 @@
        		<class name="tests.TestRequestSearch" />       		
         </classes>
     </test>-->
-    <test name="TestDocumentSearch_TESTENV1">
+    <test name="TestSearch_Document">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
        		<class name="functionaltests.TestDocumentSearch" />       		     		
         </classes>
     </test>
-     <test name="TestDocumentSearch_TESTENV2">
+     <test name="TestSearch_Invoice">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
        		<class name="functionaltests.TestInvoiceSearch" />       		     		

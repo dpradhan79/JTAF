@@ -1,5 +1,8 @@
 package com.testreport;
 
+import org.apache.log4j.Logger;
+
+import com.testreport.ExtentReporter.ExtentTestVisibilityMode;
 import com.utilities.ReusableLibs;
 
 /**
@@ -11,6 +14,7 @@ import com.utilities.ReusableLibs;
 public class ReportFactory {
 	
 	private static IReporter testReport = null;	
+	private static final Logger LOG = Logger.getLogger(ReportFactory.class);
 	
 	public enum ReportType
 	{
@@ -23,7 +27,7 @@ public class ReportFactory {
 		
 	}
 	
-	public synchronized static IReporter getInstance(ReportType reportType) throws Exception
+	public synchronized static IReporter getInstance(ReportType reportType, ExtentTestVisibilityMode extentTestVisibilityMode) throws Exception
 	{
 		if(ReportFactory.testReport == null)
 		{
@@ -50,7 +54,7 @@ public class ReportFactory {
 					
 					reUsableLib.makeDir(screenShotLocation);
 					String filePath = String.format("%s", htmlReportName);
-					ReportFactory.testReport = new ExtentReporter(filePath, extentConfigFile, boolAppendExisting, boolIsCignitiLogoRequired);
+					ReportFactory.testReport = new ExtentReporter(filePath, extentConfigFile, boolAppendExisting, boolIsCignitiLogoRequired, extentTestVisibilityMode);
 					
 					break;				
 				

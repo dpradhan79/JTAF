@@ -8,19 +8,17 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
-import org.testng.log4testng.Logger;
+import org.apache.log4j.Logger;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
-import com.aventstack.extentreports.utils.FileUtil;
 import com.google.common.io.Resources;
 
 /**
@@ -29,18 +27,25 @@ import com.google.common.io.Resources;
  *
  */
 public class ExtentReporter implements IReporter {
-
+	
 	private static final Logger LOG = Logger.getLogger(ExtentReporter.class);
 	private boolean boolAppendExisting = false;
 	private boolean isCignitiLogoRequired = false;
-	private ExtentReports objExtentReport = null;
-	private static ThreadLocal<ExtentTest> threadLocalExtentTest = new ThreadLocal<ExtentTest>();
-    //private ExtentTest objExtentTest = null;
+	private ExtentReports objExtentReport = null;	
+	private static ThreadLocal<ExtentTest> threadLocalExtentTest = new ThreadLocal<ExtentTest>();   
+	private ExtentTestVisibilityMode extentTestVisibilityMode;
     
-    protected ExtentReporter(String filePath, boolean boolAppendExisting, boolean isCignitiLogoRequired)
+	public enum ExtentTestVisibilityMode
+	{
+		TestNGTestTagAsTestsAtLeft,
+		TestNGTestMethodsAsTestAtLeft
+	}
+	
+    protected ExtentReporter(String filePath, boolean boolAppendExisting, boolean isCignitiLogoRequired, ExtentTestVisibilityMode extentTestVisibilityMode)
 	{
 		this.boolAppendExisting = boolAppendExisting;
-		this.isCignitiLogoRequired = isCignitiLogoRequired;
+		this.isCignitiLogoRequired = isCignitiLogoRequired;	
+		this.extentTestVisibilityMode = extentTestVisibilityMode;
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
 		htmlReporter.setAppendExisting(boolAppendExisting);
 		this.objExtentReport = new ExtentReports();
@@ -49,10 +54,11 @@ public class ExtentReporter implements IReporter {
 		
 	}
     
-    protected ExtentReporter(String filePath, String extentConfigFile, boolean boolAppendExisting, boolean isCignitiLogoRequired) throws URISyntaxException
+    protected ExtentReporter(String filePath, String extentConfigFile, boolean boolAppendExisting, boolean isCignitiLogoRequired, ExtentTestVisibilityMode extentTestVisibilityMode) throws URISyntaxException
 	{
 		this.boolAppendExisting = boolAppendExisting;
-		this.isCignitiLogoRequired = isCignitiLogoRequired;
+		this.isCignitiLogoRequired = isCignitiLogoRequired;	
+		this.extentTestVisibilityMode = extentTestVisibilityMode;
 		ExtentHtmlReporter htmlReporter = new ExtentHtmlReporter(filePath);
 		if(extentConfigFile != null)	
 		{
@@ -67,22 +73,41 @@ public class ExtentReporter implements IReporter {
 		
 	}
 	
-
+    public ExtentTestVisibilityMode getExtentTestVisibilityMode()
+    {
+    	return this.extentTestVisibilityMode;
+    }
 	@Override
 	public void initTestCase(String testcaseName) {
+		
 		ExtentTest objExtentTest = null;
-		objExtentTest = ExtentReporter.threadLocalExtentTest.get().createNode(testcaseName);	
-		ExtentReporter.threadLocalExtentTest.set(objExtentTest);
-		LOG.info(String.format("Node Created - %s For Test Case - %s Started, New ExtentTest - %s", testcaseName, ExtentReporter.threadLocalExtentTest.get(), objExtentTest));
+		
+		if(this.extentTestVisibilityMode == ExtentTestVisibilityMode.TestNGTestMethodsAsTestAtLeft)
+		{
+			objExtentTest =  this.objExtentReport.createTest(testcaseName);
+			ExtentReporter.threadLocalExtentTest.set(objExtentTest);
+			LOG.info(String.format("ExtentTest Created - %s Created, With Name - %s", objExtentTest, testcaseName));
+		}
+		
+		else if(this.extentTestVisibilityMode == ExtentTestVisibilityMode.TestNGTestTagAsTestsAtLeft)
+		{
+			//The below code is for creating nodes at right panel for test cases in left panel. Does not look good.
+				
+			objExtentTest = ExtentReporter.threadLocalExtentTest.get().createNode(testcaseName);
+			ExtentReporter.threadLocalExtentTest.set(objExtentTest);
+			LOG.info(String.format("Node Created - %s For Test Case - %s Started, New ExtentTest - %s", testcaseName, ExtentReporter.threadLocalExtentTest.get(), objExtentTest));		
+			
+		}
+		
 	}
 	
 	@Override
-	public void createTestNgXMLTestTag(String nodeName)
+	public void createTestNgXMLTestTag(String testcaseName)
 	{
 		ExtentTest objExtentTest = null;
-		objExtentTest =  this.objExtentReport.createTest(nodeName);
+		objExtentTest =  this.objExtentReport.createTest(testcaseName);
 		ExtentReporter.threadLocalExtentTest.set(objExtentTest);
-		LOG.info(String.format("ExtentTest Created - %s Created, With Name - %s", objExtentTest, nodeName));
+		LOG.info(String.format("ExtentTest Created - %s Created, With Name - %s", objExtentTest, testcaseName));
 		
 	}
 	@Override
@@ -105,10 +130,7 @@ public class ExtentReporter implements IReporter {
 		
 		try {	
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
-			
-			//ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, String.format("StepName - %s, Step Description", stepName, stepDescription));
-			//ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath));
+			ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());			
 			LOG.info(String.format("StepName - %s, StepDescription - %s Passed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
@@ -133,10 +155,10 @@ public class ExtentReporter implements IReporter {
 	
 	@Override
 	public void logFailure(String stepName, String stepDescription, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
-		try {			
+		
+		try {	
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, String.format("StepName - %s, Step Description", stepName, stepDescription));
+			ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());			
 			LOG.error(String.format("StepName - %s, StepDescription - %s Failed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
@@ -155,10 +177,10 @@ public class ExtentReporter implements IReporter {
 
 	@Override
 	public void logInfo(String message, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.INFO, message);
+		
 		try {			
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, message);
+			ExtentReporter.threadLocalExtentTest.get().log(Status.INFO, message, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			LOG.info(message);
 		} catch (IOException | AWTException ex) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
@@ -183,10 +205,10 @@ public class ExtentReporter implements IReporter {
 	
 	@Override
 	public void logWarning(String stepName, String stepDescription, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription));
+		
 		try {			
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, String.format("StepName - %s, Step Description", stepName, stepDescription));
+			ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build()));
 			LOG.warn(String.format("StepName - %s, StepDescription - %s Failed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
@@ -205,10 +227,10 @@ public class ExtentReporter implements IReporter {
 
 	@Override
 	public void logException(Exception ex, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.ERROR, ex);
+		
 		try {			
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, ex.getMessage());
+			ExtentReporter.threadLocalExtentTest.get().log(Status.ERROR, ex, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			LOG.error(ex.getMessage(), ex);
 		} catch (IOException | AWTException e) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", e.getMessage(), e.getStackTrace()));
@@ -227,10 +249,10 @@ public class ExtentReporter implements IReporter {
 
 	@Override
 	public void logFatal(Exception ex, String screenShotPath) {
-		ExtentReporter.threadLocalExtentTest.get().log(Status.FATAL, ex);
+		
 		try {			
 			this.takeScreenShot(screenShotPath);
-			ExtentReporter.threadLocalExtentTest.get().addScreenCaptureFromPath(screenShotPath, ex.getMessage());
+			ExtentReporter.threadLocalExtentTest.get().log(Status.FATAL, ex, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			LOG.fatal(ex.getMessage(), ex);
 		} catch (IOException | AWTException e) {			
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", e.getMessage(), e.getStackTrace()));
