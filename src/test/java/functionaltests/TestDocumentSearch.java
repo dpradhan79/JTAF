@@ -18,7 +18,7 @@ public class TestDocumentSearch extends TestTemplate{
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isAddButtonVisisble = data.get("searchDocument_isEditable");
+		String isAddButtonVisisble = data.get("search_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);

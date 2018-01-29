@@ -18,7 +18,7 @@ public class TestInvoiceSearch extends TestTemplate{
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isEditable = data.get("searchDocument_isEditable");
+		String isEditable = data.get("search_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);

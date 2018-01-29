@@ -50,7 +50,7 @@ public class TestTemplate {
 	protected static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
 	protected static ReusableLibs reUsableLib = null;
 
-	@DataProvider(name = "getDataFromExcel")
+	@DataProvider(name = "getDataFromExcel", parallel = true)
 	public Object[][] getDataFromExcel() throws URISyntaxException {
 		URL urlFilePath = Resources.getResource("testdata/WebAutomationTestData.xlsx");
 		String filePath = Paths.get(urlFilePath.toURI()).toFile().getAbsolutePath();
@@ -186,6 +186,13 @@ public class TestTemplate {
 		finally {
 			TestTemplate.testReport.updateTestCaseStatus();
 		}
+	}
+	
+	protected synchronized String getScreenShotName()
+	{
+		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");
+		String fileExtension = reUsableLib.getConfigProperty("ScreenshotPictureFormat");		
+		return ReusableLibs.getScreenshotFile(screenShotLocation, fileExtension);
 	}
 
 }

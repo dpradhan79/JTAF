@@ -80,8 +80,7 @@ public class ExtentReporter implements IReporter {
 	@Override
 	public void initTestCase(String testcaseName) {
 		
-		ExtentTest objExtentTest = null;
-		
+		ExtentTest objExtentTest = null;		
 		if(this.extentTestVisibilityMode == ExtentTestVisibilityMode.TestNGTestMethodsAsTestAtLeft)
 		{
 			objExtentTest =  this.objExtentReport.createTest(testcaseName);
