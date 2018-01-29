@@ -300,4 +300,22 @@ public class SoftCoGlobalSearchPage extends PageTemplate {
 		return isSuccess;
 	}
 	
+	public boolean clickOnInvoices() throws Exception
+	{
+		boolean isSuccess = false;
+		try
+		{
+			this.Click(By.xpath(invoice));
+			invoicePageObj.acceptUnSavedChangesPopUp();
+			isSuccess = true;
+		}
+		catch(Exception ex)
+		{
+			isSuccess = false;
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			throw ex;
+		}
+		return isSuccess;
+	}
+	
 }

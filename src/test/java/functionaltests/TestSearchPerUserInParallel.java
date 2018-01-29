@@ -8,6 +8,7 @@ import org.testng.ITestContext;
 import org.testng.Reporter;
 import org.testng.annotations.Test;
 
+import com.config.IConstants;
 import com.pages.SoftCoGlobalSearchPage;
 import com.pages.SoftCoLoginPage;
 
@@ -69,6 +70,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -79,6 +81,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -89,6 +92,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -99,6 +103,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -109,6 +114,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -119,6 +125,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}
 		try
 		{
@@ -129,6 +136,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
+			searchPage.clickOnInvoices();
 		}		
 		
 	}
