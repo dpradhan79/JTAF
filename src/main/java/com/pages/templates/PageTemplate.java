@@ -48,14 +48,16 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			this.driver.findElement(byLocator).sendKeys(text);
-			this.testReport.logSuccess("SendKeys", String.format("Entered Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator));
 			LOG.info(String.format("SendKeys Successful - (By - %s, text - %s)", byLocator, text));
+			this.testReport.logSuccess("SendKeys", String.format("Entered Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator));
+			
 		}
 		catch(Exception ex)
 		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			this.testReport.logFailure("SendKeys", String.format("Failed To Enter Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator, this.getScreenShotName()));
 			this.testReport.logException(ex);
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
+						
 		}
 		
 	}
@@ -66,18 +68,55 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			this.driver.findElement(byLocator).click();
-			this.testReport.logSuccess("Click", String.format("Click Performed On Locator - <mark>%s</mark>", byLocator));
 			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
+			this.testReport.logSuccess("Click", String.format("Click Performed On Locator - <mark>%s</mark>", byLocator));
+			
 		}
 		catch(Exception ex)
 		{
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 			this.testReport.logFailure("Click", String.format("Failed To Perform Click On Locator - <mark>%s</mark>", byLocator, this.getScreenShotName()));
 			this.testReport.logException(ex);
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
+						
 		}
 		
 	}
 
+	protected boolean checkCheckBox(By byLocator)
+	{
+		boolean isSuccess = false;
+		try
+		{
+			//read check box web element and store to check box web element obj
+	    	WebElement checkBox = this.driver.findElement(byLocator);
+	    	
+	    	//Wait until element is clickable
+	    	this.waitUntilElementIsClickable(byLocator);
+	    	
+	    	//Click on check-box
+	    	if(checkBox.isSelected())
+	    	{
+	    		LOG.info("check-box already checked");
+	    	}
+	    	else
+	    	{
+	    	Actions act = new Actions(this.driver);
+	    	act.moveToElement(checkBox).click().build().perform();
+	    	LOG.info("check-box checked successfully");
+	    	this.testReport.logSuccess("checkCheckBox", String.format("check-box - <mark>%s</mark> checked successfully", byLocator));
+	    	}
+	    	isSuccess = true;
+		}
+		catch(Exception ex)
+		{
+			isSuccess = false;
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			this.testReport.logFailure("checkCheckBox", String.format("Exception Encountered for <mark>%s</mark>", "checkCheckBox"), this.getScreenShotName());
+			this.testReport.logException(ex);
+		}
+		return isSuccess;
+	}
+	
 	protected String getAttribute(By byLocator, String attribute)
 	{
 		String attributeValue = null;
@@ -85,14 +124,15 @@ public abstract class PageTemplate {
 		{
 			this.waitUntilElementIsClickable(byLocator);
 			attributeValue = this.driver.findElement(byLocator).getAttribute(attribute);
+			LOG.info(String.format("Method - %s returns value - %s for attribute - %s for Locator - %s", "getAttribute", attributeValue, attribute, byLocator));
 			this.testReport.logInfo(String.format("Method - <mark>%s</mark> returns value - <mark>%s</mark> for attribute - <mark>%s</mark> for Locator - <mark>%s</mark>", "getAttribute", attributeValue, attribute, byLocator));
-			LOG.info(String.format("Click Successful - (By - %s)", byLocator));
+			
 		}
 		catch(Exception ex)
 		{
-			this.testReport.logFailure("getAttribute", String.format("Exception Encountered for <mark>%s</mark>", "getAttribute"), this.getScreenShotName());
-			this.testReport.logException(ex);
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			this.testReport.logFailure(String.format("getAttribute For Element - %s, For Attribute - %s", byLocator, attribute), String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()), this.getScreenShotName());
+									
 		}
 		return attributeValue;
 		
@@ -115,7 +155,7 @@ public abstract class PageTemplate {
 			
 			String OkButtonUnSavedChangesPopUp = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "OkButtonUnSavedChangesPopUp");
 			
-			boolean elementStatus = this.isElementDisplayed(By.xpath(OkButtonUnSavedChangesPopUp));
+			boolean elementStatus = this.isElementPresent(By.xpath(OkButtonUnSavedChangesPopUp));
 			if(elementStatus)
 			{
 				this.Click(By.xpath(OkButtonUnSavedChangesPopUp));
@@ -127,10 +167,12 @@ public abstract class PageTemplate {
 			
 			wait.until(ExpectedConditions.visibilityOfAllElementsLocatedBy(By.xpath(byLoginButton)));
 			LOG.info("Application logged out successfully");
+			this.testReport.logSuccess("logout", String.format("Application logged out successfully"));
 		}
 		catch(Exception ex)
 		{
 			LOG.error(String.format("Exception Encountered While Logging Out - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			this.testReport.logFailure("logout", String.format("Exception Encountered for <mark>%s</mark>", "logout"), this.getScreenShotName());
 			throw ex;
 		}
 	}
@@ -144,12 +186,14 @@ public abstract class PageTemplate {
 			WebDriverWait wait = new WebDriverWait(this.driver,this.implicitWaitInSecs);
 			wait.until(ExpectedConditions.elementToBeClickable(byLocator));
 			LOG.info(String.format("Element clickable - (By - %s)", byLocator));
+			this.testReport.logSuccess("waitUntilElementIsClickable", String.format("Element clickable - (By - %s)", byLocator));
 			isSuccess = true;
 		}
 		catch(Exception ex)
 		{
-			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
+			isSuccess = false;			
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			this.testReport.logWarning("waitUntilElementIsClickable", String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()), this.getScreenShotName());
 		}
 		return isSuccess;
 	}
@@ -161,13 +205,15 @@ public abstract class PageTemplate {
 		{		
 			WebDriverWait wait = new WebDriverWait(this.driver,this.implicitWaitInSecs);
 			wait.until(ExpectedConditions.visibilityOfElementLocated(byLocator));
-			LOG.info(String.format("Element clickable - (By - %s)", byLocator));
+			LOG.info(String.format("Element visible - (By - %s)", byLocator));
+			this.testReport.logSuccess("waitUntilElementIsVisible", String.format("Element visible - (By - %s)", byLocator));
 			isSuccess = true;
 		}
 		catch(Exception ex)
 		{
-			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
+			isSuccess = false;			
+			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			this.testReport.logWarning("waitUntilElementIsVisible", String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace(), this.getScreenShotName()));
 		}
 		return isSuccess;
 	}
@@ -194,8 +240,9 @@ public abstract class PageTemplate {
 					}
 					catch(Exception ex)
 					{
-						LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
 						isSuccess = false;
+						LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));					
+						
 					}
 					return isSuccess;
 					
@@ -204,7 +251,7 @@ public abstract class PageTemplate {
 				
 	}
 	
-	protected boolean isElementDisplayed(By byLocator)
+	protected boolean isElementPresent(By byLocator)
 	{
 		boolean isSuccess = false;
 		try
@@ -212,13 +259,15 @@ public abstract class PageTemplate {
 			//validate element is displayed or not
 			implicitwait(2);
 			Assert.assertEquals(driver.findElements(byLocator).size() > 0, true);
-			LOG.info(String.format("Element displayed - (By - %s)", byLocator));
+			LOG.info(String.format("Element Present - (By - %s)", byLocator));
+			this.testReport.logSuccess("isElementPresent", String.format("Element Present - (By - %s)", byLocator));
 			isSuccess = true;
 		}
 		catch(Exception | AssertionError ex)
 		{
-			LOG.info(String.format("Element not displayed - (By - %s)", byLocator));
 			isSuccess = false;
+			LOG.info(String.format("Element Not Prensent - (By - %s)", byLocator));			
+			this.testReport.logInfo(String.format("Element Not Prensent - (By - %s)", byLocator));			
 		}
 		
 		return isSuccess;
@@ -250,38 +299,7 @@ public abstract class PageTemplate {
     	implicitwait(2);
 	}
 	
-	protected boolean checkCheckBox(By byLocator)
-	{
-		boolean isSuccess = false;
-		try
-		{
-			//read check box web element and store to check box web element obj
-	    	WebElement checkBox = this.driver.findElement(byLocator);
-	    	
-	    	//Wait until element is clickable
-	    	this.waitUntilElementIsClickable(byLocator);
-	    	
-	    	//Click on check-box
-	    	if(checkBox.isSelected())
-	    	{
-	    		LOG.info("check-box already checked");
-	    	}
-	    	else
-	    	{
-	    	Actions act = new Actions(this.driver);
-	    	act.moveToElement(checkBox).click().build().perform();
-	    	LOG.info("check-box checked successfully");
-	    	}
-	    	isSuccess = true;
-		}
-		catch(Exception ex)
-		{
-			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));			
-		}
-		return isSuccess;
-	}
-	
+		
 	protected synchronized String getScreenShotName()
 	{
 		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");

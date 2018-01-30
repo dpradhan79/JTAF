@@ -35,7 +35,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			userName = data.get("UserName");
 			password = data.get("Password");
 			isEditable = data.get("search_isEditable");
-			
+			TestTemplate.testReport.logInfo(String.format("Test Data In Use - UserName = %s, Password = %s, search_isEditable = %s", userName, password, isEditable));
 			SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 			try
 			{

@@ -30,7 +30,7 @@ public class SoftCoInvoicePage extends PageTemplate {
 			String addButton = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "AddButton");
 			String ElipsesMenu = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "ElipsesMenu");
 			this.waitUntilElementIsClickable(By.xpath(ElipsesMenu));
-			boolean addButtonStatus = this.isElementDisplayed(By.xpath(addButton));
+			boolean addButtonStatus = this.isElementPresent(By.xpath(addButton));
 			if(isEditable.equalsIgnoreCase("yes"))
 			{
 				if(addButtonStatus)
@@ -305,7 +305,7 @@ public class SoftCoInvoicePage extends PageTemplate {
 	{
 		String OkButtonUnSavedChangesPopUp = this.reUsableLib.getElementLocator(IConstants.LOCATORSFILENAME, "OkButtonUnSavedChangesPopUp");
 		
-		boolean elementStatus = this.isElementDisplayed(By.xpath(OkButtonUnSavedChangesPopUp));
+		boolean elementStatus = this.isElementPresent(By.xpath(OkButtonUnSavedChangesPopUp));
 		if(elementStatus)
 		{
 			this.Click(By.xpath(OkButtonUnSavedChangesPopUp));

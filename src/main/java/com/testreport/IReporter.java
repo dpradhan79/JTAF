@@ -25,11 +25,11 @@ public interface IReporter {
 	 void logWarning(String stepName, String stepDescription);
 	 void logWarning(String stepName, String stepDescription, String screenShotPath);
 	 
-	 void logException(Exception ex);
-	 void logException(Exception ex, String screenShotPath);
+	 void logException(Throwable ex);
+	 void logException(Throwable ex, String screenShotPath);
 	 
-	 void logFatal(Exception ex);
-	 void logFatal(Exception ex, String screenShotPath);
+	 void logFatal(Throwable ex);
+	 void logFatal(Throwable ex, String screenShotPath);
 	 
 	 
 	 void updateTestCaseStatus();

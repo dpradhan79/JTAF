@@ -218,14 +218,14 @@ public class ExtentReporter implements IReporter {
 
 
 	@Override
-	public void logException(Exception ex) {
+	public void logException(Throwable ex) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.ERROR, ex);
 		LOG.error(ex.getMessage(), ex);
 		
 	}
 
 	@Override
-	public void logException(Exception ex, String screenShotPath) {
+	public void logException(Throwable ex, String screenShotPath) {
 		
 		try {			
 			this.takeScreenShot(screenShotPath);
@@ -239,7 +239,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void logFatal(Exception ex) {
+	public void logFatal(Throwable ex) {
 		ExtentReporter.threadLocalExtentTest.get().log(Status.FATAL, ex);
 		LOG.fatal(ex.getMessage(), ex);
 		
@@ -247,7 +247,7 @@ public class ExtentReporter implements IReporter {
 	
 
 	@Override
-	public void logFatal(Exception ex, String screenShotPath) {
+	public void logFatal(Throwable ex, String screenShotPath) {
 		
 		try {			
 			this.takeScreenShot(screenShotPath);
