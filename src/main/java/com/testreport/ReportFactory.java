@@ -59,7 +59,7 @@ public class ReportFactory {
 					break;				
 				
 				default:
-					throw new Exception("Html Report Other Than Extent Is Not Implemented Yet...");
+					throw new Exception("Html Report Other Than Extent Is Not Currently Supported...");
 					
 			}
 			
