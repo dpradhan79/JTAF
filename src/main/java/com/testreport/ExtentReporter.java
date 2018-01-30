@@ -12,14 +12,21 @@ import java.nio.file.Paths;
 
 import javax.imageio.ImageIO;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.log4j.Logger;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
 
 import com.aventstack.extentreports.ExtentReports;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 import com.aventstack.extentreports.Status;
 import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+import com.aventstack.extentreports.utils.FileUtil;
 import com.google.common.io.Resources;
+
+import templates.TestTemplate;
 
 /**
  * 
@@ -281,12 +288,15 @@ public class ExtentReporter implements IReporter {
 	
 	private void takeScreenShot(String screenShotPath) throws IOException, AWTException
 	{
-		Robot objRobot = new Robot();		
+		/*Robot objRobot = new Robot();		
 		Rectangle screenRect = new Rectangle(Toolkit.getDefaultToolkit().getScreenSize());
         BufferedImage screenFullImage = objRobot.createScreenCapture(screenRect);            
         String format = screenShotPath.substring(screenShotPath.indexOf(".") + 1);       
-       	ImageIO.write(screenFullImage, format, new File(screenShotPath));
+       	ImageIO.write(screenFullImage, format, new File(screenShotPath));	*/	
 		
+		File screenShotFile = ((TakesScreenshot)TestTemplate.threadLocalWebDriver.get()).getScreenshotAs(OutputType.FILE);
+		FileUtils.copyFile(screenShotFile, new File(screenShotPath));
 	}
-
+	
+	
 }

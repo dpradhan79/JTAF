@@ -47,7 +47,7 @@ public class TestTemplate {
 	protected String url = null;
 	protected static String implicitWaitInSecs = null;
 	protected static String pageLoadTimeOutInSecs = null;
-	protected static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
+	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
 	protected static ReusableLibs reUsableLib = null;
 
 	@DataProvider(name = "getDataFromExcel", parallel = true)
