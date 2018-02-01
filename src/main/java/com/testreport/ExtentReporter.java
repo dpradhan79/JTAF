@@ -139,7 +139,7 @@ public class ExtentReporter implements IReporter {
 			ExtentReporter.threadLocalExtentTest.get().log(Status.PASS, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());			
 			LOG.info(String.format("StepName - %s, StepDescription - %s Passed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 		}
 		
 	}
@@ -167,7 +167,7 @@ public class ExtentReporter implements IReporter {
 			ExtentReporter.threadLocalExtentTest.get().log(Status.FAIL, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription), MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());			
 			LOG.error(String.format("StepName - %s, StepDescription - %s Failed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 		}
 		
 	}
@@ -189,7 +189,7 @@ public class ExtentReporter implements IReporter {
 			ExtentReporter.threadLocalExtentTest.get().log(Status.INFO, message, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build());
 			LOG.info(message);
 		} catch (IOException | AWTException ex) {			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 		}
 		
 	}
@@ -217,7 +217,7 @@ public class ExtentReporter implements IReporter {
 			ExtentReporter.threadLocalExtentTest.get().log(Status.WARNING, String.format("StepName - %s, StepDescription - %s", stepName, stepDescription, MediaEntityBuilder.createScreenCaptureFromPath(screenShotPath).build()));
 			LOG.warn(String.format("StepName - %s, StepDescription - %s Failed, ScreenShot - %s", stepName, stepDescription, screenShotPath));
 		} catch (IOException | AWTException ex) {			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 		}
 		
 	}

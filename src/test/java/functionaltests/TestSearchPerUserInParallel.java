@@ -68,7 +68,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -79,7 +79,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -90,7 +90,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -101,7 +101,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -112,7 +112,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -123,7 +123,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}
@@ -134,7 +134,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 		catch(Exception ex)
 		{
 			Reporter.log(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}		

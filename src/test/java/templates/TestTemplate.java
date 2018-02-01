@@ -93,7 +93,8 @@ public class TestTemplate {
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException {
 		try {
-			LOG.info(String.format("Test Method To Be Executed Next -  %s", m.getName()));
+			LOG.info(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
+			TestTemplate.testReport.logInfo(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
 			WebDriver webDriver = null;
 
 			if (TestTemplate.testReport instanceof ExtentReporter) {
@@ -151,8 +152,7 @@ public class TestTemplate {
 			webDriver.manage().window().maximize();
 
 		} catch (Exception ex) {
-			LOG.error(
-					String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex);
 
 		}
@@ -161,7 +161,8 @@ public class TestTemplate {
 
 	@AfterMethod
 	public void afterMethod(ITestContext testContext, ITestResult testResult, Method m) throws Exception {
-		LOG.info(String.format("Test Method Execution Completed For -  %s", m.getName()));
+		LOG.info(String.format("Thread - %d , Completes Executing Test Method - %s", Thread.currentThread().getId(), m.getName()));
+		TestTemplate.testReport.logInfo(String.format("Thread - %d , Completes Executing Test Method - %s", Thread.currentThread().getId(), m.getName()));
 		try {
 			new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport).logout();
 		} catch (Exception ex) {

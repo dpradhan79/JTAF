@@ -54,7 +54,7 @@ public abstract class PageTemplate {
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logFailure("SendKeys", String.format("Failed To Enter Text - <mark>%s</mark> To Locator - <mark>%s</mark>", text, byLocator, this.getScreenShotName()));
 			this.testReport.logException(ex);
 						
@@ -74,7 +74,7 @@ public abstract class PageTemplate {
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logFailure("Click", String.format("Failed To Perform Click On Locator - <mark>%s</mark>", byLocator, this.getScreenShotName()));
 			this.testReport.logException(ex);
 						
@@ -110,7 +110,7 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logFailure("checkCheckBox", String.format("Exception Encountered for <mark>%s</mark>", "checkCheckBox"), this.getScreenShotName());
 			this.testReport.logException(ex);
 		}
@@ -130,7 +130,7 @@ public abstract class PageTemplate {
 		}
 		catch(Exception ex)
 		{
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logFailure(String.format("getAttribute For Element - %s, For Attribute - %s", byLocator, attribute), String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()), this.getScreenShotName());
 									
 		}
@@ -192,7 +192,7 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logWarning("waitUntilElementIsClickable", String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()), this.getScreenShotName());
 		}
 		return isSuccess;
@@ -212,7 +212,7 @@ public abstract class PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;			
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			this.testReport.logWarning("waitUntilElementIsVisible", String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace(), this.getScreenShotName()));
 		}
 		return isSuccess;
@@ -241,7 +241,7 @@ public abstract class PageTemplate {
 					catch(Exception ex)
 					{
 						isSuccess = false;
-						LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));					
+						LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));					
 						
 					}
 					return isSuccess;

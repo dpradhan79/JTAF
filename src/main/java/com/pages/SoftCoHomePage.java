@@ -62,7 +62,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -97,7 +101,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -132,7 +140,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -152,7 +164,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -174,7 +190,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -194,7 +214,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -213,7 +237,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -233,7 +261,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -253,7 +285,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -273,7 +309,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -293,7 +333,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -313,7 +357,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
@@ -357,7 +405,11 @@ public class SoftCoHomePage extends PageTemplate {
 		catch(Exception ex)
 		{
 			isSuccess = false;
-			LOG.error(String.format("Exception Encountered - %s, StackTrace - %s", ex.getMessage(), ex.getStackTrace()));
+			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
+			this.testReport.logFailure(
+					String.format("Class Name - %s , Method Name - %s, Line Number - %s, Exception Encountered - %s",
+					ex.getStackTrace()[2].getClassName(), ex.getStackTrace()[2].getMethodName(),
+					ex.getStackTrace()[2].getLineNumber(), ex.getMessage()));
 			throw ex;
 		}
 		return isSuccess;
