@@ -1,5 +1,8 @@
 package testdriver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.testng.TestNG;
 
 public class TestDriver {
@@ -7,9 +10,12 @@ public class TestDriver {
 	public static void main(String [] args)
 	{
 		TestNG testNG = new TestNG();
-		testNG.setDefaultSuiteName("SoftCo");
+		/*testNG.setDefaultSuiteName("SoftCo");
 		testNG.setDefaultTestName("Test Search");
-		testNG.setTestClasses(new Class[] {functionaltests.TestSearchPerUserInParallel.class});
+		testNG.setTestClasses(new Class[] {functionaltests.TestSearchPerUserInParallel.class});*/
+		List<String> suiteList = new ArrayList<String>();
+		suiteList.add("testng.xml");
+		testNG.setTestSuites(suiteList);
 		testNG.run();
 	}
 }

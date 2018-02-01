@@ -94,7 +94,7 @@ public class TestTemplate {
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException {
 		try {
 			LOG.info(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
-			TestTemplate.testReport.logInfo(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
+			
 			WebDriver webDriver = null;
 
 			if (TestTemplate.testReport instanceof ExtentReporter) {
@@ -149,12 +149,16 @@ public class TestTemplate {
 					TimeUnit.SECONDS);
 			webDriver.manage().timeouts().pageLoadTimeout(Integer.parseInt(TestTemplate.pageLoadTimeOutInSecs),
 					TimeUnit.SECONDS);
-			webDriver.manage().window().maximize();
+			webDriver.manage().window().maximize();			
 
 		} catch (Exception ex) {
 			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex);
 
+		}
+		finally
+		{
+			TestTemplate.testReport.logInfo(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
 		}
 
 	}
