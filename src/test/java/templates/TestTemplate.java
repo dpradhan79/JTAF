@@ -47,7 +47,7 @@ public class TestTemplate {
 	protected String url = null;
 	protected static String implicitWaitInSecs = null;
 	protected static String pageLoadTimeOutInSecs = null;
-	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
+	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();	
 	protected static ReusableLibs reUsableLib = null;
 
 	@DataProvider(name = "getDataFromExcel", parallel = true)
@@ -75,13 +75,8 @@ public class TestTemplate {
 
 	@BeforeTest
 	public void beforeTest(ITestContext testContext) {
-		LOG.info(String.format("Test - %s , About To Start", testContext.getCurrentXmlTest().getName()));
-		if (TestTemplate.testReport instanceof ExtentReporter) {
-			if (((ExtentReporter) TestTemplate.testReport)
-					.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestTagAsTestsAtLeft) {
-				TestTemplate.testReport.createTestNgXMLTestTag(testContext.getCurrentXmlTest().getName());
-			}
-		}
+		LOG.info(String.format("Thread - %d, Executes Next Test - %s ", Thread.currentThread().getId(),
+				testContext.getCurrentXmlTest().getName()));
 	}
 
 	@AfterTest
@@ -93,14 +88,19 @@ public class TestTemplate {
 	@BeforeMethod
 	public void beforeMethod(ITestContext testContext, Method m) throws URISyntaxException {
 		try {
-			LOG.info(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
-			
+			LOG.info(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(),
+					m.getName()));
+
 			WebDriver webDriver = null;
 
 			if (TestTemplate.testReport instanceof ExtentReporter) {
 
 				if (((ExtentReporter) TestTemplate.testReport)
 						.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestTagAsTestsAtLeft) {
+
+					TestTemplate.testReport
+							.createTestNgXMLTestTag(String.format("%s", testContext.getCurrentXmlTest().getName()));
+
 					TestTemplate.testReport.initTestCase(String.format("%s", m.getName()));
 				} else if (((ExtentReporter) TestTemplate.testReport)
 						.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestMethodsAsTestAtLeft) {
@@ -149,24 +149,25 @@ public class TestTemplate {
 					TimeUnit.SECONDS);
 			webDriver.manage().timeouts().pageLoadTimeout(Integer.parseInt(TestTemplate.pageLoadTimeOutInSecs),
 					TimeUnit.SECONDS);
-			webDriver.manage().window().maximize();			
+			webDriver.manage().window().maximize();
 
 		} catch (Exception ex) {
 			LOG.error(String.format("Exception Encountered - %s", ex.getMessage()));
 			TestTemplate.testReport.logException(ex);
 
-		}
-		finally
-		{
-			TestTemplate.testReport.logInfo(String.format("Thread - %d , Executes Next Test Method - %s", Thread.currentThread().getId(), m.getName()));
+		} finally {
+			TestTemplate.testReport.logInfo(String.format("Thread - %d , Executes Next Test Method - %s",
+					Thread.currentThread().getId(), m.getName()));
 		}
 
 	}
 
 	@AfterMethod
 	public void afterMethod(ITestContext testContext, ITestResult testResult, Method m) throws Exception {
-		LOG.info(String.format("Thread - %d , Completes Executing Test Method - %s", Thread.currentThread().getId(), m.getName()));
-		TestTemplate.testReport.logInfo(String.format("Thread - %d , Completes Executing Test Method - %s", Thread.currentThread().getId(), m.getName()));
+		LOG.info(String.format("Thread - %d , Completes Executing Test Method - %s", Thread.currentThread().getId(),
+				m.getName()));
+		TestTemplate.testReport.logInfo(String.format("Thread - %d , Completes Executing Test Method - %s",
+				Thread.currentThread().getId(), m.getName()));
 		try {
 			new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport).logout();
 		} catch (Exception ex) {
@@ -192,11 +193,10 @@ public class TestTemplate {
 			TestTemplate.testReport.updateTestCaseStatus();
 		}
 	}
-	
-	protected synchronized String getScreenShotName()
-	{
+
+	protected synchronized String getScreenShotName() {
 		String screenShotLocation = reUsableLib.getConfigProperty("ScreenshotLocation");
-		String fileExtension = reUsableLib.getConfigProperty("ScreenshotPictureFormat");		
+		String fileExtension = reUsableLib.getConfigProperty("ScreenshotPictureFormat");
 		return ReusableLibs.getScreenshotFile(screenShotLocation, fileExtension);
 	}
 

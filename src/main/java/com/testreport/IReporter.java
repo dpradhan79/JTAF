@@ -8,7 +8,7 @@ public interface IReporter {
 	
 	 void initTestCase(String testcaseName); 	 
 	 
-	 void createTestNgXMLTestTag(String nodeName);	 
+	 void createTestNgXMLTestTag(String testCaseName);	 
 	 
 	 void logSuccess(String stepName);
 	 void logSuccess(String stepName, String stepDescription);

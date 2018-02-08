@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name = "JTAFTests" parallel = "methods" thread-count="5">
+<suite name = "JTAFTests" parallel = "tests" thread-count="5">
 	<listeners>
 		<listener class-name = "org.uncommons.reportng.HTMLReporter"/>	
 		<listener class-name = "org.uncommons.reportng.JUnitXMLReporter"/>			
@@ -21,6 +21,12 @@
     </test>-->    
      <test name="TestENV_SearchPerUserInParallel">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
+        <classes>       		
+       		<class name="functionaltests.TestSearchPerUserInParallel" />       		     		
+        </classes>
+    </test>
+    <test name="DEVENV_SearchPerUserInParallel">
+    	<parameter name="APPURL" value="https://chgdev.softco.com/softco/"/>
         <classes>       		
        		<class name="functionaltests.TestSearchPerUserInParallel" />       		     		
         </classes>
