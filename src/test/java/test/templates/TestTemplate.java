@@ -48,7 +48,7 @@ public class TestTemplate {
 	protected String url = null;
 	protected static String implicitWaitInSecs = null;
 	protected static String pageLoadTimeOutInSecs = null;
-	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();	
+	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
 	protected static ReusableLibs reUsableLib = null;
 
 	@DataProvider(name = "getDataFromExcel", parallel = true)
@@ -78,6 +78,12 @@ public class TestTemplate {
 	public void beforeTest(ITestContext testContext) {
 		LOG.info(String.format("Thread - %d, Executes Next Test - %s ", Thread.currentThread().getId(),
 				testContext.getCurrentXmlTest().getName()));
+		if (((ExtentReporter) TestTemplate.testReport)
+				.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestTagAsTestsAtLeft) {
+			TestTemplate.testReport
+					.createTestNgXMLTestTag(String.format("%s", testContext.getCurrentXmlTest().getName()));
+
+		}
 	}
 
 	@AfterTest
@@ -99,9 +105,8 @@ public class TestTemplate {
 				if (((ExtentReporter) TestTemplate.testReport)
 						.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestTagAsTestsAtLeft) {
 
-					TestTemplate.testReport
-							.createTestNgXMLTestTag(String.format("%s", testContext.getCurrentXmlTest().getName()));
-
+					/*TestTemplate.testReport
+							.createTestNgXMLTestTag(String.format("%s", testContext.getCurrentXmlTest().getName()));*/
 					TestTemplate.testReport.initTestCase(String.format("%s", m.getName()));
 				} else if (((ExtentReporter) TestTemplate.testReport)
 						.getExtentTestVisibilityMode() == ExtentTestVisibilityMode.TestNGTestMethodsAsTestAtLeft) {

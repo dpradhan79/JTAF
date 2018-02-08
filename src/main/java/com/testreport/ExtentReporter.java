@@ -39,8 +39,7 @@ public class ExtentReporter implements IReporter {
 	private boolean boolAppendExisting = false;
 	private boolean isCignitiLogoRequired = false;
 	private ExtentReports objExtentReport = null;	
-	private static ThreadLocal<ExtentTest> threadLocalExtentTest = new InheritableThreadLocal<ExtentTest>(); 
-	
+	private static ThreadLocal<ExtentTest> threadLocalExtentTest = new InheritableThreadLocal<ExtentTest>(); 	
 	private ExtentTestVisibilityMode extentTestVisibilityMode;
     
 	public enum ExtentTestVisibilityMode
