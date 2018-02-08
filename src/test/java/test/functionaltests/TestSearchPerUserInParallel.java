@@ -1,4 +1,4 @@
-package functionaltests;
+package test.functionaltests;
 
 import java.lang.reflect.Method;
 import java.util.Hashtable;
@@ -9,10 +9,10 @@ import org.testng.Reporter;
 import org.testng.annotations.Test;
 
 import com.config.IConstants;
-import com.pages.SoftCoGlobalSearchPage;
-import com.pages.SoftCoLoginPage;
 
-import templates.TestTemplate;
+import aut.pages.SoftCoGlobalSearchPage;
+import aut.pages.SoftCoLoginPage;
+import test.templates.TestTemplate;
 
 public class TestSearchPerUserInParallel extends TestTemplate {
 	
@@ -59,7 +59,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 				TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			}
 		
-		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
+		/*SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		
 		try
 		{
@@ -138,7 +138,7 @@ public class TestSearchPerUserInParallel extends TestTemplate {
 			TestTemplate.testReport.logException(ex, this.getScreenShotName());
 			searchPage.clickOnInvoices();
 		}		
-		
+*/		
 	}
 	
 	

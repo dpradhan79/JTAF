@@ -1,4 +1,4 @@
-package com.pages;
+package aut.pages;
 
 import java.util.List;
 
@@ -8,8 +8,9 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 import com.config.IConstants;
-import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
+
+import aut.pages.templates.PageTemplate;
 
 public class SoftCoGlobalSearchPage extends PageTemplate {
 	SoftCoInvoicePage invoicePageObj = new SoftCoInvoicePage(this.driver, this.testReport);

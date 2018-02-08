@@ -22,13 +22,13 @@
      <test name="TestENV_SearchPerUserInParallel">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
-       		<class name="functionaltests.TestSearchPerUserInParallel" />       		     		
+       		<class name="test.functionaltests.TestSearchPerUserInParallel" />       		     		
         </classes>
     </test>
     <test name="DEVENV_SearchPerUserInParallel">
     	<parameter name="APPURL" value="https://chgdev.softco.com/softco/"/>
         <classes>       		
-       		<class name="functionaltests.TestSearchPerUserInParallel" />       		     		
+       		<class name="test.functionaltests.TestSearchPerUserInParallel" />       		     		
         </classes>
     </test>
    

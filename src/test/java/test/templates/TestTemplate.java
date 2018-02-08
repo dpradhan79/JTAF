@@ -1,4 +1,4 @@
-package templates;
+package test.templates;
 
 import java.io.File;
 import java.lang.reflect.Method;
@@ -25,7 +25,6 @@ import org.testng.xml.XmlTest;
 
 import com.excel.Xls_Reader;
 import com.google.common.io.Resources;
-import com.pages.SoftCoLoginPage;
 import com.testreport.ExtentReporter;
 import com.testreport.ExtentReporter.ExtentTestVisibilityMode;
 import com.testreport.IReporter;
@@ -33,6 +32,8 @@ import com.testreport.ReportFactory;
 import com.testreport.ReportFactory.ReportType;
 import com.utilities.ReusableLibs;
 import com.utilities.TestUtil;
+
+import aut.pages.SoftCoLoginPage;
 
 /**
  * 

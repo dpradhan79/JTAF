@@ -1,12 +1,13 @@
-package com.pages;
+package aut.pages;
 
 import org.apache.log4j.Logger;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import com.config.IConstants;
-import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
+
+import aut.pages.templates.PageTemplate;
 
 public class SoftCoLoginPage extends PageTemplate {
 	private static final Logger LOG = Logger.getLogger(SoftCoLoginPage.class);

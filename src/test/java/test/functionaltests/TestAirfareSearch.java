@@ -1,20 +1,19 @@
-package functionaltests;
+package test.functionaltests;
 
 import java.util.Hashtable;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import com.pages.SoftCoGlobalSearchPage;
-import com.pages.SoftCoLoginPage;
+import aut.pages.SoftCoGlobalSearchPage;
+import aut.pages.SoftCoLoginPage;
+import test.templates.TestTemplate;
 
-import templates.TestTemplate;
-
-public class TestHotelSearch extends TestTemplate{
+public class TestAirfareSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestHotelSearch.class);
+	private static final Logger LOG = Logger.getLogger(TestAirfareSearch.class);
 	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
-	public void validateHotelSearch(Hashtable<String, String> data) throws Exception
+	public void validateAirfareSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
@@ -32,7 +31,7 @@ public class TestHotelSearch extends TestTemplate{
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
-		searchPage.validateSearchHotel(isEditable);
+		searchPage.validateSearchAirfare(isEditable);
 	}
 
 }

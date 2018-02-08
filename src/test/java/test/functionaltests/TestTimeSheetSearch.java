@@ -1,24 +1,23 @@
-package functionaltests;
+package test.functionaltests;
 
 import java.util.Hashtable;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import com.pages.SoftCoGlobalSearchPage;
-import com.pages.SoftCoLoginPage;
+import aut.pages.SoftCoGlobalSearchPage;
+import aut.pages.SoftCoLoginPage;
+import test.templates.TestTemplate;
 
-import templates.TestTemplate;
-
-public class TestDocumentSearch extends TestTemplate{
+public class TestTimeSheetSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestDocumentSearch.class);
+	private static final Logger LOG = Logger.getLogger(TestTimeSheetSearch.class);
 	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
-	public void validateDocumentSearch(Hashtable<String, String> data) throws Exception
+	public void validateTimeSheetSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isAddButtonVisisble = data.get("search_isEditable");
+		String isEditable = data.get("search_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
@@ -28,12 +27,11 @@ public class TestDocumentSearch extends TestTemplate{
 		}
 		else
 		{
-			LOG.error(String.format("Login Not Successful for user - %s", userName));			
+			LOG.error(String.format("Login Not Successful for user - %s", userName));
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
-		searchPage.validateSearchForDocument(isAddButtonVisisble);
-				
+		searchPage.validateSearchForATimeSheet(isEditable);
 	}
 
 }

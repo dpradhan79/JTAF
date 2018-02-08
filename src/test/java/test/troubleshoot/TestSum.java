@@ -1,4 +1,4 @@
-package troubleshoot;
+package test.troubleshoot;
 
 import org.apache.log4j.Logger;
 import org.testng.Assert;
@@ -6,7 +6,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
-import templates.TestTemplate;
+import test.templates.TestTemplate;
 
 
 

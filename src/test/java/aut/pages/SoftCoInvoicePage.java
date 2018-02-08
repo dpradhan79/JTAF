@@ -1,4 +1,4 @@
-package com.pages;
+package aut.pages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,8 +11,9 @@ import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import com.config.IConstants;
-import com.pages.templates.PageTemplate;
 import com.testreport.IReporter;
+
+import aut.pages.templates.PageTemplate;
 
 public class SoftCoInvoicePage extends PageTemplate {
 	SoftCoHomePage homePageObj = new SoftCoHomePage(this.driver, this.testReport);

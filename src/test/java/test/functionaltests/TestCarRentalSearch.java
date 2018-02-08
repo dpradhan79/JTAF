@@ -1,24 +1,23 @@
-package functionaltests;
+package test.functionaltests;
 
 import java.util.Hashtable;
 
 import org.apache.log4j.Logger;
 import org.testng.annotations.Test;
 
-import com.pages.SoftCoGlobalSearchPage;
-import com.pages.SoftCoLoginPage;
+import aut.pages.SoftCoGlobalSearchPage;
+import aut.pages.SoftCoLoginPage;
+import test.templates.TestTemplate;
 
-import templates.TestTemplate;
-
-public class TestMissingClient extends TestTemplate{
+public class TestCarRentalSearch extends TestTemplate{
 	
-	private static final Logger LOG = Logger.getLogger(TestMissingClient.class);
-	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue"})
-	public void validateMissingClient(Hashtable<String, String> data) throws Exception
+	private static final Logger LOG = Logger.getLogger(TestCarRentalSearch.class);
+	@Test(dataProvider = "getDataFromExcel", groups = {"ARProcessingQueue", "ARGlobalSearch"})
+	public void validateCarRentalSearch(Hashtable<String, String> data) throws Exception
 	{
 		String userName = data.get("UserName");
 		String password = data.get("Password");
-		String isEditable = data.get("missingClient_isEditable");
+		String isEditable = data.get("search_isEditable");
 		
 		SoftCoLoginPage loginPage = new SoftCoLoginPage(threadLocalWebDriver.get(), TestTemplate.testReport);
 		boolean isSuccess = loginPage.login(this.url, userName, password);
@@ -32,8 +31,7 @@ public class TestMissingClient extends TestTemplate{
 		}
 		
 		SoftCoGlobalSearchPage searchPage = new SoftCoGlobalSearchPage(threadLocalWebDriver.get(), TestTemplate.testReport);
-		searchPage.validateMissingClient(isEditable);
-		
+		searchPage.validateSearchCarRental(isEditable);
 	}
 
 }

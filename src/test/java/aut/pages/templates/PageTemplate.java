@@ -1,4 +1,4 @@
-package com.pages.templates;
+package aut.pages.templates;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
