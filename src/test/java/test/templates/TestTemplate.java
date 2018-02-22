@@ -49,7 +49,7 @@ public class TestTemplate {
 	protected static String implicitWaitInSecs = null;
 	protected static String pageLoadTimeOutInSecs = null;
 	public static ThreadLocal<WebDriver> threadLocalWebDriver = new ThreadLocal<WebDriver>();
-	protected static ReusableLibs reUsableLib = null;
+	private static ReusableLibs reUsableLib = null;
 
 	@DataProvider(name = "getDataFromExcel", parallel = true)
 	public Object[][] getDataFromExcel() throws URISyntaxException {
