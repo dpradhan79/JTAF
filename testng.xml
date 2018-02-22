@@ -4,21 +4,9 @@
 	<listeners>
 		<listener class-name = "org.uncommons.reportng.HTMLReporter"/>	
 		<listener class-name = "org.uncommons.reportng.JUnitXMLReporter"/>			
-	</listeners>
-    
-    <!--<test name="TestSearch_TESTENV">
-    	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
-        <classes>
-       		<class name="tests.TestMissingClient" />
-       		<class name="tests.TestDocumentSearch" />
-       		<class name="tests.TestInvoiceSearch" />
-       		<class name="tests.TestTimeSheetSearch" />
-       		<class name="tests.TestCarRentalSearch" />
-       		<class name="tests.TestAirfareSearch" />
-       		<class name="tests.TestHotelSearch" />
-       		<class name="tests.TestRequestSearch" />       		
-        </classes>
-    </test>-->    
+	</listeners>   
+	
+   <parameter name="Browser" value= "${browser}" />
      <test name="TestENV_SearchPerUserInParallel">
     	<parameter name="APPURL" value="https://chgtest.softco.com/softco/"/>
         <classes>       		
